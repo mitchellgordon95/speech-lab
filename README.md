@@ -8,7 +8,7 @@ The demos come from a completed study of **10,676 sound segments from 80 speaker
 
 The measured result is English sound discrimination. Mandarin transfer, learner improvement, and anatomical coaching have not been established. The marker is a position on a learned contrast, not a percent-correct score.
 
-The three guided contrasts scored **97.6% S/SH**, **99.1% R/L**, and **92.2% sheep/ship vowels** on the final test (balanced accuracy). Learned encoder directions outperformed the simple acoustic baselines for these contrasts. Qwen3-Omni supplies R/L and the vowel demo; Qwen3-ASR 1.7B supplies S/SH. Raw similarity and two-example personal centroids were weaker. Speaker matching helped in an exploratory equal-size comparison, but that does not establish adaptation without correct personal examples.
+The three guided contrasts scored **97.6% S/SH**, **99.1% R/L**, and **92.3% sheep/ship vowels** on the final test (balanced accuracy). Learned encoder directions outperformed the simple acoustic baselines for these contrasts. Qwen3-Omni supplies R/L and the vowel demo; Qwen3-ASR 1.7B supplies S/SH. Raw similarity and two-example personal centroids were weaker. Speaker matching helped in an exploratory equal-size comparison, but that does not establish adaptation without correct personal examples.
 
 ## Run on a Mac
 

@@ -4,6 +4,7 @@ import hashlib
 import json
 import platform
 from datetime import datetime, timezone
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
 
 import numpy as np
@@ -17,7 +18,9 @@ from .prepare import BASE
 
 
 def pct(value):
-    return f"{value * 100:.1f}%"
+    # Match the UI's half-up rounding for exact quarter-percentage-point scores.
+    rounded = Decimal(str(value * 100)).quantize(Decimal("0.1"), rounding=ROUND_HALF_UP)
+    return f"{rounded}%"
 
 
 def write():

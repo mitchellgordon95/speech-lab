@@ -16,8 +16,8 @@ Representation selection used validation speakers only. The selected models were
 | R / L | qwen-omni | 100.0% | 99.1% | 98.2%–99.8% | 800 | Pass |
 | F / TH | qwen-asr-large | 83.4% | 78.9% | 76.3%–81.4% | 788 | Withheld |
 | B / P | wavlm-large | 88.4% | 86.0% | 82.5%–89.1% | 787 | Pass |
-| IY / IH | qwen-omni | 94.0% | 92.2% | 90.0%–94.1% | 800 | Pass |
-| AE / EH | qwen-asr | 86.5% | 83.2% | 79.9%–86.2% | 800 | Withheld |
+| IY / IH | qwen-omni | 94.0% | 92.3% | 90.0%–94.1% | 800 | Pass |
+| AE / EH | qwen-asr | 86.5% | 83.3% | 79.9%–86.2% | 800 | Withheld |
 | UW / UH | qwen-asr-large | 95.4% | 90.7% | 88.0%–93.4% | 558 | Pass |
 
 BA = balanced accuracy: average recall of the two categories. Chance is 50%. Intervals use 500 bootstrap resamples of complete speakers. These are individual descriptive intervals, not multiple-comparison-adjusted significance tests.
@@ -32,15 +32,15 @@ All rows use the same fixed C=0.1, class-balanced linear classifier. These final
 |---|---:|---:|---:|---:|---:|---:|---:|
 | formants | 52.4% | 87.8% | 45.1% | 59.4% | 82.5% | 68.9% | 76.4% |
 | spectrum | 87.7% | 89.4% | 67.6% | 67.8% | 76.5% | 58.0% | 72.8% |
-| acoustic | 87.5% | 92.8% | 67.2% | 76.2% | 84.8% | 68.2% | 78.4% |
-| timing_pitch_level | 63.3% | 52.2% | 59.5% | 74.7% | 62.3% | 59.2% | 59.4% |
-| wavlm-base | 91.5% | 94.2% | 69.9% | 83.6% | 89.1% | 75.4% | 86.5% |
+| acoustic | 87.5% | 92.8% | 67.2% | 76.2% | 84.8% | 68.3% | 78.4% |
+| timing_pitch_level | 63.3% | 52.3% | 59.5% | 74.7% | 62.3% | 59.3% | 59.4% |
+| wavlm-base | 91.5% | 94.3% | 69.9% | 83.6% | 89.1% | 75.4% | 86.5% |
 | wavlm-large | 95.9% | 97.4% | 77.3% | 86.0% | 90.9% | 79.0% | 92.2% |
 | xls-r | 96.5% | 97.5% | 77.4% | 86.2% | 92.9% | 80.9% | 92.0% |
-| qwen-asr | 98.1% | 98.1% | 79.4% | 84.0% | 93.4% | 83.2% | 92.8% |
+| qwen-asr | 98.1% | 98.1% | 79.4% | 84.0% | 93.4% | 83.3% | 92.8% |
 | qwen-asr-large | 97.6% | 98.8% | 78.9% | 86.6% | 92.8% | 84.6% | 90.7% |
-| qwen-omni | 97.0% | 99.1% | 82.3% | 87.4% | 92.2% | 83.6% | 92.0% |
-| sparc | 87.5% | 90.2% | 69.6% | 78.6% | 85.9% | 71.4% | 84.5% |
+| qwen-omni | 97.0% | 99.1% | 82.3% | 87.4% | 92.3% | 83.6% | 92.0% |
+| sparc | 87.5% | 90.3% | 69.6% | 78.6% | 85.9% | 71.4% | 84.5% |
 
 Formants = median voiced F1–F3. Spectrum = eight spectral/zero-crossing features. Acoustics = those eleven plus pitch, voicing fraction, duration and log RMS. `timing_pitch_level` is a diagnostic nuisance baseline, not a candidate for promotion. SPARC is a pretrained estimate of articulation, not observed tongue motion. Its discrimination accuracy does not validate anatomical accuracy.
 
@@ -56,8 +56,8 @@ The following use each contrast's validation-selected representation. Neural/SPA
 | R/L | 99.1% | 94.4% | 29.6% | 70.3% | 95.3% | 40 | 611 |
 | F/TH | 78.9% | 61.4% | 42.6% | 59.7% | 72.4% | 40 | 610 |
 | B/P | 86.0% | 78.2% | 52.0% | 64.6% | 78.5% | 40 | 608 |
-| IY/IH | 92.2% | 88.2% | 26.9% | 65.2% | 87.1% | 40 | 623 |
-| AE/EH | 83.2% | 74.4% | 37.7% | 52.9% | 74.6% | 40 | 624 |
+| IY/IH | 92.3% | 88.3% | 26.9% | 65.2% | 87.1% | 40 | 623 |
+| AE/EH | 83.3% | 74.4% | 37.7% | 52.9% | 74.6% | 40 | 624 |
 | UW/UH | 90.7% | 85.3% | 34.9% | 59.4% | 83.2% | 15 | 179 |
 
 *Separate exploratory adaptation evaluation: reserve two known-correct examples per category from each eligible test speaker; query different utterances from that speaker. Compare personal centroids with centroids from the other test speakers. Values are means of per-speaker balanced accuracies, with different queries from the main evaluation. They are not directly comparable to the main BA. This experiment assumes the learner can supply correct examples; it does not establish unsupervised voice normalization or adaptation for an unproducible sound.
@@ -70,8 +70,8 @@ The following use each contrast's validation-selected representation. Neural/SPA
 |---|---:|---:|---:|---:|---:|---:|
 | S/SH | 98.1% | 98.1% | 98.8% | 98.8% | 98.1% | 98.1% |
 | R/L | 99.4% | 99.4% | 97.5% | 97.5% | 98.8% | 99.4% |
-| F/TH | 78.1% | 78.1% | 75.0% | 76.2% | 80.6% | 78.8% |
-| B/P | 92.5% | 92.5% | 85.0% | 81.2% | 88.8% | 91.9% |
+| F/TH | 78.1% | 78.1% | 75.0% | 76.3% | 80.6% | 78.8% |
+| B/P | 92.5% | 92.5% | 85.0% | 81.3% | 88.8% | 91.9% |
 | IY/IH | 94.4% | 94.4% | 93.8% | 93.1% | 93.8% | 95.0% |
 | AE/EH | 83.1% | 83.1% | 87.5% | 78.8% | 80.6% | 82.5% |
 | UW/UH | 91.9% | 91.9% | 85.0% | 93.1% | 93.1% | 91.9% |
