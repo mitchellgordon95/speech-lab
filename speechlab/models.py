@@ -192,7 +192,12 @@ def extract_frames(y, name, layer=None, progress=lambda _: None, normalize=True)
                 )
             try:
                 if MODELS[name]["family"] == "qwen3_asr":
-                    output = model(features, input_features_mask=mask)
+                    # The extractor pads to 30 s. Discard wholly empty CNN chunks;
+                    # retaining complete chunks preserves each valid frame's context.
+                    chunk = model.n_window * 2
+                    valid = int(inputs["attention_mask"].sum(-1).max())
+                    padded = ((valid + chunk - 1) // chunk) * chunk
+                    output = model(features[:, :, :padded], input_features_mask=mask[:, :padded])
                 else:
                     lengths = mask.sum(-1)
                     features = features.permute(0, 2, 1)[mask.bool()].permute(1, 0)

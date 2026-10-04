@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "seed": 20261004,
+  "dataset": "gilkeyio/librispeech-alignments",
+  "revision": "0daa1eb43dda38ee6ce752e785555380e5628f5c",
+  "audio_source": "https://www.openslr.org/12",
+  "alignment_method": "Montreal Forced Aligner, automatic (not hand-verified ground truth)",
+  "license": "CC-BY-4.0",
+  "development_split": "dev_clean",
+  "final_test_split": "test_clean",
+  "validation_speaker_fraction": 0.25,
+  "max_tokens_per_phone_per_speaker": 10,
+  "minimum_phone_seconds": 0.08,
+  "maximum_phone_seconds": 0.4,
+  "phone_input_policy": "Only the aligned phone waveform, no neighboring words/phones. Normalize RMS, taper 5 ms at edges, center in 0.5 s of zero padding. All encoders use four temporal-bin means. SPARC follows the same input policy before its normalization/padding/filtering.",
+  "contrasts": {
+    "s_sh": [
+      "S",
+      "SH"
+    ],
+    "r_l": [
+      "R",
+      "L"
+    ],
+    "f_th": [
+      "F",
+      "TH"
+    ],
+    "b_p": [
+      "B",
+      "P"
+    ],
+    "iy_ih": [
+      "IY",
+      "IH"
+    ],
+    "ae_eh": [
+      "AE",
+      "EH"
+    ],
+    "uw_uh": [
+      "UW",
+      "UH"
+    ]
+  },
+  "selection": "Deterministic hash order, exclude unknown words and boundary crossings; stressed vowels only; cap each phone per speaker and at most one occurrence per word type per phone/speaker.",
+  "model_selection": "Fit on development training speakers; select representation by balanced accuracy on development validation speakers. Freeze selection before final test scoring. Use C=0.1 throughout.",
+  "metrics": [
+    "balanced_accuracy",
+    "roc_auc",
+    "speaker_bootstrap_95_ci",
+    "cosine_nearest_centroid_accuracy",
+    "same_speaker_vs_other_speaker_centroids",
+    "gain_and_noise_robustness",
+    "boundary_jitter_robustness"
+  ],
+  "promotion_gate": "At least 0.85 validation balanced accuracy and 0.85 final-test balanced accuracy, with final speaker-bootstrap CI lower bound >=0.80. Demos also require >=0.80 balanced accuracy under +/-20 ms boundary shifts, 20 dB added noise, and a central crop of at most 160 ms on a deterministic test subset. This establishes corpus discrimination only, not learner improvement or anatomical coaching.",
+  "not_testable_with_this_corpus": [
+    "actual learner improvement",
+    "intelligibility judgments",
+    "Mandarin transfer",
+    "true articulator position",
+    "paid cloud assessors without credentials"
+  ]
+}

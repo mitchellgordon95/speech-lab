@@ -9,7 +9,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from demos import acoustics, articulation, calibration, directions, embeddings, fixtures, providers
 
-from . import audio, jobs, models, store
+from . import audio, guided, jobs, models, store
 from .catalog import DEMOS
 from .config import MAX_BYTES, ROOT
 
@@ -92,6 +92,39 @@ def status():
         "device": models.device(),
         "clip_count": len(store.records("clips")),
     }
+
+
+class GuidedAnalysis(BaseModel):
+    contrast: str
+    clip_id: str | None = None
+    example_side: int | None = Field(default=None, ge=0, le=1)
+    example_index: int = Field(default=0, ge=0, le=2)
+
+
+@app.get("/api/guided")
+def guided_catalog():
+    return guided.catalog()
+
+
+@app.get("/api/guided/{ident}/example/{side}/{index}/{kind}")
+def guided_example(ident: str, side: int, index: int, kind: str):
+    return FileResponse(guided.reference(ident, side, index, kind), media_type="audio/flac")
+
+
+@app.post("/api/guided/analyze")
+def guided_analyze(body: GuidedAnalysis):
+    guided.contrast(body.contrast)
+    example = None
+    if body.example_side is not None:
+        if body.clip_id:
+            raise ValueError("Choose an example or a recording, not both.")
+        example = (body.example_side, body.example_index)
+        guided.reference(body.contrast, *example)
+    elif body.clip_id:
+        store.read("clips", body.clip_id)
+    else:
+        raise ValueError("Record a sound first.")
+    return jobs.submit(lambda progress: guided.analyze(body.contrast, body.clip_id, example, progress))
 
 
 @app.get("/api/clips")

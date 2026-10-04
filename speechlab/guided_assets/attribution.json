@@ -1,0 +1,336 @@
+{
+  "corpus": "LibriSpeech, Vassil Panayotov, Guoguo Chen, Daniel Povey, Sanjeev Khudanpur; LibriVox readers",
+  "source": "https://www.openslr.org/12",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "alignments": "Loren Lugosch / Montreal Forced Aligner; packaging by Kim Gilkey",
+  "alignment_source": "https://zenodo.org/records/2619474",
+  "dataset_revision": "0daa1eb43dda38ee6ce752e785555380e5628f5c",
+  "dataset": "https://huggingface.co/datasets/gilkeyio/librispeech-alignments",
+  "changes": "Word and phone crops, encoded as lossless 16 kHz PCM16 FLAC. No synthetic speech.",
+  "clips": [
+    {
+      "word": "saw",
+      "phone": "S",
+      "speaker": "3729",
+      "utterance": "3729-6852-0007",
+      "token": "3729-6852-0007-17",
+      "phone_start": 2.16,
+      "phone_end": 2.28,
+      "word_crop_start": 2.1350000000000002,
+      "word_crop_end": 2.425,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.14499999999999957
+      ],
+      "word_file": "s_sh-3729-6852-0007-17-word.flac",
+      "phone_file": "s_sh-3729-6852-0007-17-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "so",
+      "phone": "S",
+      "speaker": "4992",
+      "utterance": "4992-41797-0022",
+      "token": "4992-41797-0022-16",
+      "phone_start": 1.49,
+      "phone_end": 1.59,
+      "word_crop_start": 1.465,
+      "word_crop_end": 1.7049999999999998,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.125
+      ],
+      "word_file": "s_sh-4992-41797-0022-16-word.flac",
+      "phone_file": "s_sh-4992-41797-0022-16-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "see",
+      "phone": "S",
+      "speaker": "1089",
+      "utterance": "1089-134691-0023",
+      "token": "1089-134691-0023-32",
+      "phone_start": 3.06,
+      "phone_end": 3.18,
+      "word_crop_start": 3.035,
+      "word_crop_end": 3.265,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.14500000000000002
+      ],
+      "word_file": "s_sh-1089-134691-0023-32-word.flac",
+      "phone_file": "s_sh-1089-134691-0023-32-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "she",
+      "phone": "SH",
+      "speaker": "1221",
+      "utterance": "1221-135767-0010",
+      "token": "1221-135767-0010-0",
+      "phone_start": 0.19,
+      "phone_end": 0.32,
+      "word_crop_start": 0.165,
+      "word_crop_end": 0.405,
+      "phone_in_word": [
+        0.024999999999999994,
+        0.155
+      ],
+      "word_file": "s_sh-1221-135767-0010-0-word.flac",
+      "phone_file": "s_sh-1221-135767-0010-0-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "shall",
+      "phone": "SH",
+      "speaker": "2830",
+      "utterance": "2830-3979-0012",
+      "token": "2830-3979-0012-12",
+      "phone_start": 1.88,
+      "phone_end": 2.0,
+      "word_crop_start": 1.855,
+      "word_crop_end": 2.155,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.14500000000000002
+      ],
+      "word_file": "s_sh-2830-3979-0012-12-word.flac",
+      "phone_file": "s_sh-2830-3979-0012-12-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "should",
+      "phone": "SH",
+      "speaker": "5105",
+      "utterance": "5105-28241-0012",
+      "token": "5105-28241-0012-37",
+      "phone_start": 4.46,
+      "phone_end": 4.59,
+      "word_crop_start": 4.435,
+      "word_crop_end": 4.7250000000000005,
+      "phone_in_word": [
+        0.025000000000000355,
+        0.15500000000000025
+      ],
+      "word_file": "s_sh-5105-28241-0012-37-word.flac",
+      "phone_file": "s_sh-5105-28241-0012-37-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "room",
+      "phone": "R",
+      "speaker": "672",
+      "utterance": "672-122797-0015",
+      "token": "672-122797-0015-11",
+      "phone_start": 1.58,
+      "phone_end": 1.67,
+      "word_crop_start": 1.5550000000000002,
+      "word_crop_end": 1.9149999999999998,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.11499999999999977
+      ],
+      "word_file": "r_l-672-122797-0015-11-word.flac",
+      "phone_file": "r_l-672-122797-0015-11-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "read",
+      "phone": "R",
+      "speaker": "4970",
+      "utterance": "4970-29093-0009",
+      "token": "4970-29093-0009-11",
+      "phone_start": 1.38,
+      "phone_end": 1.47,
+      "word_crop_start": 1.355,
+      "word_crop_end": 1.6649999999999998,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.11499999999999999
+      ],
+      "word_file": "r_l-4970-29093-0009-11-word.flac",
+      "phone_file": "r_l-4970-29093-0009-11-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "run",
+      "phone": "R",
+      "speaker": "4992",
+      "utterance": "4992-41797-0016",
+      "token": "4992-41797-0016-7",
+      "phone_start": 0.71,
+      "phone_end": 0.79,
+      "word_crop_start": 0.6849999999999999,
+      "word_crop_end": 0.925,
+      "phone_in_word": [
+        0.025000000000000022,
+        0.1050000000000001
+      ],
+      "word_file": "r_l-4992-41797-0016-7-word.flac",
+      "phone_file": "r_l-4992-41797-0016-7-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "live",
+      "phone": "L",
+      "speaker": "1284",
+      "utterance": "1284-1180-0020",
+      "token": "1284-1180-0020-46",
+      "phone_start": 4.0,
+      "phone_end": 4.09,
+      "word_crop_start": 3.975,
+      "word_crop_end": 4.425000000000001,
+      "phone_in_word": [
+        0.02499999999999991,
+        0.11499999999999977
+      ],
+      "word_file": "r_l-1284-1180-0020-46-word.flac",
+      "phone_file": "r_l-1284-1180-0020-46-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "left",
+      "phone": "L",
+      "speaker": "4992",
+      "utterance": "4992-41797-0008",
+      "token": "4992-41797-0008-40",
+      "phone_start": 4.08,
+      "phone_end": 4.17,
+      "word_crop_start": 4.055,
+      "word_crop_end": 4.525,
+      "phone_in_word": [
+        0.025000000000000355,
+        0.11500000000000021
+      ],
+      "word_file": "r_l-4992-41797-0008-40-word.flac",
+      "phone_file": "r_l-4992-41797-0008-40-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "led",
+      "phone": "L",
+      "speaker": "61",
+      "utterance": "61-70970-0038",
+      "token": "61-70970-0038-52",
+      "phone_start": 4.46,
+      "phone_end": 4.58,
+      "word_crop_start": 4.435,
+      "word_crop_end": 4.735,
+      "phone_in_word": [
+        0.025000000000000355,
+        0.14500000000000046
+      ],
+      "word_file": "r_l-61-70970-0038-52-word.flac",
+      "phone_file": "r_l-61-70970-0038-52-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "she",
+      "phone": "IY",
+      "speaker": "4992",
+      "utterance": "4992-23283-0015",
+      "token": "4992-23283-0015-3",
+      "phone_start": 0.39,
+      "phone_end": 0.5,
+      "word_crop_start": 0.285,
+      "word_crop_end": 0.525,
+      "phone_in_word": [
+        0.10500000000000004,
+        0.21500000000000002
+      ],
+      "word_file": "iy_ih-4992-23283-0015-3-word.flac",
+      "phone_file": "iy_ih-4992-23283-0015-3-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "he",
+      "phone": "IY",
+      "speaker": "4446",
+      "utterance": "4446-2273-0000",
+      "token": "4446-2273-0000-24",
+      "phone_start": 2.3,
+      "phone_end": 2.38,
+      "word_crop_start": 2.185,
+      "word_crop_end": 2.405,
+      "phone_in_word": [
+        0.11499999999999977,
+        0.19499999999999984
+      ],
+      "word_file": "iy_ih-4446-2273-0000-24-word.flac",
+      "phone_file": "iy_ih-4446-2273-0000-24-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "feel",
+      "phone": "IY",
+      "speaker": "8555",
+      "utterance": "8555-284447-0009",
+      "token": "8555-284447-0009-16",
+      "phone_start": 1.76,
+      "phone_end": 1.91,
+      "word_crop_start": 1.685,
+      "word_crop_end": 1.9849999999999999,
+      "phone_in_word": [
+        0.07499999999999996,
+        0.22499999999999987
+      ],
+      "word_file": "iy_ih-8555-284447-0009-16-word.flac",
+      "phone_file": "iy_ih-8555-284447-0009-16-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "did",
+      "phone": "IH",
+      "speaker": "8463",
+      "utterance": "8463-287645-0005",
+      "token": "8463-287645-0005-112",
+      "phone_start": 10.84,
+      "phone_end": 10.98,
+      "word_crop_start": 10.725,
+      "word_crop_end": 11.045,
+      "phone_in_word": [
+        0.11500000000000021,
+        0.2550000000000008
+      ],
+      "word_file": "iy_ih-8463-287645-0005-112-word.flac",
+      "phone_file": "iy_ih-8463-287645-0005-112-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "him",
+      "phone": "IH",
+      "speaker": "1995",
+      "utterance": "1995-1836-0008",
+      "token": "1995-1836-0008-71",
+      "phone_start": 6.48,
+      "phone_end": 6.64,
+      "word_crop_start": 6.385,
+      "word_crop_end": 6.875,
+      "phone_in_word": [
+        0.09500000000000064,
+        0.2549999999999999
+      ],
+      "word_file": "iy_ih-1995-1836-0008-71-word.flac",
+      "phone_file": "iy_ih-1995-1836-0008-71-phone.flac",
+      "source_split": "test_clean"
+    },
+    {
+      "word": "with",
+      "phone": "IH",
+      "speaker": "121",
+      "utterance": "121-127105-0020",
+      "token": "121-127105-0020-18",
+      "phone_start": 2.22,
+      "phone_end": 2.35,
+      "word_crop_start": 2.095,
+      "word_crop_end": 2.515,
+      "phone_in_word": [
+        0.125,
+        0.2549999999999999
+      ],
+      "word_file": "iy_ih-121-127105-0020-18-word.flac",
+      "phone_file": "iy_ih-121-127105-0020-18-phone.flac",
+      "source_split": "test_clean"
+    }
+  ]
+}

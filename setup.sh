@@ -11,4 +11,4 @@ fi
 export UV_PYTHON_INSTALL_DIR="$PWD/.python"
 export UV_CACHE_DIR="$PWD/.cache/uv"
 "$uv_bin" sync --locked --python 3.12 --group dev
-printf '\nReady. Run ./start.sh and open http://127.0.0.1:8765\n'
+printf '\nReady. Run ./start.sh and open http://127.0.0.1:8767\n'

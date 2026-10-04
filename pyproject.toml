@@ -13,6 +13,9 @@ dependencies = [
 ]
 [dependency-groups]
 dev = ["pytest>=8", "playwright>=1.50", "ruff>=0.11"]
+research = [
+    "pyarrow>=25.0.1",
+]
 [project.scripts]
 speech-lab = "speechlab.cli:main"
 [build-system]

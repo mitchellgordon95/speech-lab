@@ -7,7 +7,7 @@ def main():
     parser = argparse.ArgumentParser(description="Speech Lab — a local pronunciation workbench")
     sub = parser.add_subparsers(dest="command", required=True)
     serve = sub.add_parser("serve")
-    serve.add_argument("--port", type=int, default=8765)
+    serve.add_argument("--port", type=int, default=8767)
     sub.add_parser("seed", help="Create original synthetic signals, not pronunciation references")
     bench = sub.add_parser("benchmark", help="Download and run real model inference on a synthetic fixture")
     bench.add_argument(

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>What we found · Speech Lab</title>
+    <link rel="stylesheet" href="/guided.css" />
+    <script src="/evidence.js" type="module"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/"
+        ><span class="mark" aria-hidden="true">∿</span>speech lab<span
+          class="brand-dot"
+          >.</span
+        ></a
+      >
+      <nav>
+        <a href="/">Try the sounds →</a><a href="/workbench.html">Workbench</a>
+      </nav>
+    </header>
+    <main class="evidence">
+      <p class="eyebrow">THE COMPLETED CORPUS STUDY</p>
+      <h1>What can these measurements<br />actually tell us?</h1>
+      <p>
+        We tested whether measurements of a short sound distinguish two English
+        sound categories across different speakers. This gives us a usable
+        comparison axis. It does not yet tell us which mouth movement to make,
+        whether a Mandarin pronunciation is correct, or whether the feedback
+        helps someone learn.
+      </p>
+      <h2>The test</h2>
+      <p>
+        10,676 real speech segments from 80 LibriSpeech speakers. Thirty
+        speakers fit the first models, ten different speakers selected the
+        representation for each contrast, and forty separate speakers provided
+        the final test. Each input was an isolated, timestamped sound, without
+        neighboring words. Selection was frozen before the final test. The
+        encoders may have encountered LibriSpeech during pretraining; the
+        held-out split applies to our fitted classifiers.
+      </p>
+      <p>
+        We assumed the English was pronounced correctly. Word and sound
+        boundaries were generated automatically with Montreal Forced Aligner. We
+        filtered invalid regions and tested ±20 ms shifts; the timings have not
+        been manually certified.
+      </p>
+      <div id="results">Loading results…</div>
+      <h2>How to read the feedback</h2>
+      <p>
+        The marker is a learned S-to-SH, R-to-L, or vowel-contrast position. A
+        marker on the S side means “more like the S examples along this
+        contrast.” It is not a percent-correct score. An unfamiliar third sound
+        can still land on either side.
+      </p>
+      <p>
+        Microphone mode finds a sustained sound by its volume, then analyzes
+        seven 160 ms slices. The dots show those slices and the marker shows
+        their median. Very quiet, clipped, short, or inconsistent recordings get
+        a retry message. Simple voicing checks also flag some unsuitable inputs;
+        they are not a general detector of incorrect pronunciation.
+      </p>
+      <p>
+        The corpus test used sounds from natural words. Central-crop robustness
+        supports shorter analysis windows, but sustained microphone practice,
+        new microphones, and arbitrary learner errors remain a separate domain.
+        The built-in “See its result” buttons analyze the exact source sound. No
+        recording, labeling, or training is required to inspect those results.
+      </p>
+      <h2>What each experiment measured</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Approach</th>
+              <th>Input → measurement</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Formants</td>
+              <td>Voiced sound → median F1, F2, F3 in Hz</td>
+            </tr>
+            <tr>
+              <td>Spectrum</td>
+              <td>
+                Sound → frequency center, spread, skew, flatness, band energies,
+                zero crossings
+              </td>
+            </tr>
+            <tr>
+              <td>Combined acoustics</td>
+              <td>All of those + pitch, voicing, duration, level</td>
+            </tr>
+            <tr>
+              <td>Six frozen encoders</td>
+              <td>
+                Normalized sound → four ordered means of internal audio features
+              </td>
+            </tr>
+            <tr>
+              <td>SPARC</td>
+              <td>
+                WavLM features → estimated articulation coordinates, pooled over
+                time
+              </td>
+            </tr>
+            <tr>
+              <td>Learned direction</td>
+              <td>
+                Each representation + known categories → a fitted binary
+                classifier
+              </td>
+            </tr>
+            <tr>
+              <td>Pairwise similarity</td>
+              <td>
+                Cosine distances → nearest category center and cross-speaker
+                triplets
+              </td>
+            </tr>
+            <tr>
+              <td>Personal references</td>
+              <td>
+                Two known-correct anchors per sound → same-speaker vs
+                other-speaker centroids
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        Paid cloud assessors were not run: no credentials were supplied. We did
+        not test language-model verbal judgments, intelligibility, anatomical
+        accuracy, or clinical outcomes. The Qwen tests used the audio encoders
+        alone.
+      </p>
+      <h2 id="sources">Real voices, with traceable timestamps</h2>
+      <p>
+        The clips below are the public speech examples in the demos. Word
+        playback provides context; the listed phone interval is relative to the
+        original utterance. These are crops of human recordings, not synthetic
+        voices.
+      </p>
+      <div id="audit"></div>
+      <ul class="source-list">
+        <li>
+          <a href="https://www.openslr.org/12">LibriSpeech / OpenSLR</a> —
+          Vassil Panayotov, Guoguo Chen, Daniel Povey, Sanjeev Khudanpur; source
+          readings from LibriVox volunteers.
+          <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.
+        </li>
+        <li>
+          <a href="https://zenodo.org/records/2619474"
+            >Loren Lugosch's alignments</a
+          >
+          — Montreal Forced Aligner.
+        </li>
+        <li>
+          <a
+            href="https://huggingface.co/datasets/gilkeyio/librispeech-alignments"
+            >Kim Gilkey's dataset packaging</a
+          >
+          — pinned revision recorded in the repository.
+        </li>
+        <li>
+          <a
+            href="https://github.com/mitchellgordon95/speech-lab/tree/main/research"
+            >Full protocol, aggregate scores, and reproducible scripts</a
+          >. Full corpora, personal recordings, and encoder weights are excluded
+          from the repository.
+        </li>
+      </ul>
+    </main>
+    <footer>
+      <a href="/">← Back to the sound demos</a
+      ><span>Measurements first. Claims limited to what was tested.</span>
+    </footer>
+  </body>
+</html>

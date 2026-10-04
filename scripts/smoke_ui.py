@@ -1,7 +1,7 @@
 """Exercise the running app in Chrome, using generated audio (no microphone access).
 
 Run: .venv/bin/python scripts/smoke_ui.py
-Requires a server on 127.0.0.1:8765. Writes screenshots in ignored test-results/.
+Requires a server on 127.0.0.1:8767. Writes screenshots in ignored test-results/.
 """
 
 import json
@@ -12,7 +12,7 @@ from pathlib import Path
 import httpx
 from playwright.sync_api import sync_playwright
 
-BASE = os.getenv("SPEECHLAB_TEST_URL", "http://127.0.0.1:8765")
+BASE = os.getenv("SPEECHLAB_TEST_URL", "http://127.0.0.1:8767")
 ROOT = Path(__file__).resolve().parents[1]
 OUTPUT = ROOT / "test-results"
 OUTPUT.mkdir(exist_ok=True)
@@ -41,7 +41,7 @@ def main():
         context.add_init_script(f"localStorage.setItem('speechlab.clip', {json.dumps(ids[0])});")
         page = context.new_page()
         page.on("pageerror", lambda e: errors.append(str(e)))
-        page.goto(BASE)
+        page.goto(BASE + "/workbench.html")
         page.wait_for_selector(".demo-card")
         assert page.locator(".demo-card").count() == 8
         page.screenshot(path=str(OUTPUT / "overview.png"), full_page=True)

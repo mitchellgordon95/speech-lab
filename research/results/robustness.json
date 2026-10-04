@@ -1,0 +1,793 @@
+{
+  "s_sh": {
+    "representation": "qwen-asr-large",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.98125,
+        "roc_auc": 0.9990625,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            79,
+            1
+          ],
+          [
+            2,
+            78
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.98125,
+        "roc_auc": 0.9990625,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            79,
+            1
+          ],
+          [
+            2,
+            78
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 8.708311849403572e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.9875,
+        "roc_auc": 0.99890625,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            80,
+            0
+          ],
+          [
+            2,
+            78
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 1.3182367902285372
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.9875,
+        "roc_auc": 0.99875,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            79,
+            1
+          ],
+          [
+            1,
+            79
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 2.1416263044079433
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.98125,
+        "roc_auc": 0.9975,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            79,
+            1
+          ],
+          [
+            2,
+            78
+          ]
+        ],
+        "prediction_agreement": 0.9875,
+        "mean_absolute_margin_change": 2.277221343232541
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.98125,
+        "roc_auc": 0.9989062500000001,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            79,
+            1
+          ],
+          [
+            2,
+            78
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 0.2327500279002379
+      }
+    },
+    "robustness_pass": true,
+    "demo_eligible": true
+  },
+  "f_th": {
+    "representation": "qwen-asr-large",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.78125,
+        "roc_auc": 0.87640625,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            67,
+            13
+          ],
+          [
+            22,
+            58
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.78125,
+        "roc_auc": 0.87640625,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            67,
+            13
+          ],
+          [
+            22,
+            58
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 9.537509670920485e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.75,
+        "roc_auc": 0.85171875,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            66,
+            14
+          ],
+          [
+            26,
+            54
+          ]
+        ],
+        "prediction_agreement": 0.91875,
+        "mean_absolute_margin_change": 1.6798863408213776
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.7625,
+        "roc_auc": 0.8375,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            61,
+            19
+          ],
+          [
+            19,
+            61
+          ]
+        ],
+        "prediction_agreement": 0.78125,
+        "mean_absolute_margin_change": 3.6368929576379356
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.80625,
+        "roc_auc": 0.90125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            67,
+            13
+          ],
+          [
+            18,
+            62
+          ]
+        ],
+        "prediction_agreement": 0.8375,
+        "mean_absolute_margin_change": 3.1331750455048293
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.7875000000000001,
+        "roc_auc": 0.8749999999999999,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            69,
+            11
+          ],
+          [
+            23,
+            57
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 0.38426928516296693
+      }
+    },
+    "robustness_pass": false,
+    "demo_eligible": false
+  },
+  "uw_uh": {
+    "representation": "qwen-asr-large",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.91875,
+        "roc_auc": 0.983125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            10,
+            70
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.91875,
+        "roc_auc": 0.983125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            10,
+            70
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 7.729927808952653e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.85,
+        "roc_auc": 0.95828125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            76,
+            4
+          ],
+          [
+            20,
+            60
+          ]
+        ],
+        "prediction_agreement": 0.90625,
+        "mean_absolute_margin_change": 2.495766522386288
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.9312499999999999,
+        "roc_auc": 0.9798437500000001,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            76,
+            4
+          ],
+          [
+            7,
+            73
+          ]
+        ],
+        "prediction_agreement": 0.9375,
+        "mean_absolute_margin_change": 1.7994426638772907
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.93125,
+        "roc_auc": 0.98828125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            80,
+            0
+          ],
+          [
+            11,
+            69
+          ]
+        ],
+        "prediction_agreement": 0.9375,
+        "mean_absolute_margin_change": 1.9318623320279922
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.91875,
+        "roc_auc": 0.981875,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            10,
+            70
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 0.1620005474501193
+      }
+    },
+    "robustness_pass": true,
+    "demo_eligible": true
+  },
+  "r_l": {
+    "representation": "qwen-omni",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.99375,
+        "roc_auc": 1.0,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            80,
+            0
+          ],
+          [
+            1,
+            79
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.99375,
+        "roc_auc": 1.0,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            80,
+            0
+          ],
+          [
+            1,
+            79
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 7.2476746826311e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.9750000000000001,
+        "roc_auc": 0.999375,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            1,
+            79
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 1.7663023489097704
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.9750000000000001,
+        "roc_auc": 0.99921875,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            1,
+            79
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 1.211940180603783
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.9875,
+        "roc_auc": 1.0,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            78,
+            2
+          ],
+          [
+            0,
+            80
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 1.2586999324033035
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.99375,
+        "roc_auc": 1.0,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            80,
+            0
+          ],
+          [
+            1,
+            79
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 0.09365752497491284
+      }
+    },
+    "robustness_pass": true,
+    "demo_eligible": true
+  },
+  "iy_ih": {
+    "representation": "qwen-omni",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.9437500000000001,
+        "roc_auc": 0.98875,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            6,
+            74
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.9437500000000001,
+        "roc_auc": 0.98875,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            6,
+            74
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 6.536438057480609e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.9375,
+        "roc_auc": 0.985625,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            78,
+            2
+          ],
+          [
+            8,
+            72
+          ]
+        ],
+        "prediction_agreement": 0.98125,
+        "mean_absolute_margin_change": 1.8151422766934993
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.9312499999999999,
+        "roc_auc": 0.9803124999999999,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            76,
+            4
+          ],
+          [
+            7,
+            73
+          ]
+        ],
+        "prediction_agreement": 0.9625,
+        "mean_absolute_margin_change": 1.9857485324606219
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.9375,
+        "roc_auc": 0.983125,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            7,
+            73
+          ]
+        ],
+        "prediction_agreement": 0.96875,
+        "mean_absolute_margin_change": 1.8081901243818095
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.95,
+        "roc_auc": 0.9889062500000001,
+        "n": 160,
+        "speakers": 40,
+        "confusion_matrix": [
+          [
+            78,
+            2
+          ],
+          [
+            6,
+            74
+          ]
+        ],
+        "prediction_agreement": 0.99375,
+        "mean_absolute_margin_change": 0.2834398348205415
+      }
+    },
+    "robustness_pass": true,
+    "demo_eligible": true
+  },
+  "b_p": {
+    "representation": "wavlm-large",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.925,
+        "roc_auc": 0.9798437499999999,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            75,
+            5
+          ],
+          [
+            7,
+            73
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.925,
+        "roc_auc": 0.9798437499999999,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            75,
+            5
+          ],
+          [
+            7,
+            73
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 7.716050021144838e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.85,
+        "roc_auc": 0.95890625,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            71,
+            9
+          ],
+          [
+            15,
+            65
+          ]
+        ],
+        "prediction_agreement": 0.925,
+        "mean_absolute_margin_change": 2.5405089302086474
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.8125,
+        "roc_auc": 0.91515625,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            76,
+            4
+          ],
+          [
+            26,
+            54
+          ]
+        ],
+        "prediction_agreement": 0.85,
+        "mean_absolute_margin_change": 4.31303278073748
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.8875,
+        "roc_auc": 0.9621875,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            67,
+            13
+          ],
+          [
+            5,
+            75
+          ]
+        ],
+        "prediction_agreement": 0.875,
+        "mean_absolute_margin_change": 3.152836685637875
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.91875,
+        "roc_auc": 0.9762500000000001,
+        "n": 160,
+        "speakers": 37,
+        "confusion_matrix": [
+          [
+            74,
+            6
+          ],
+          [
+            7,
+            73
+          ]
+        ],
+        "prediction_agreement": 0.99375,
+        "mean_absolute_margin_change": 0.16292922766461554
+      }
+    },
+    "robustness_pass": true,
+    "demo_eligible": true
+  },
+  "ae_eh": {
+    "representation": "qwen-asr",
+    "conditions": {
+      "baseline_subset": {
+        "balanced_accuracy": 0.83125,
+        "roc_auc": 0.9215625,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            68,
+            12
+          ],
+          [
+            15,
+            65
+          ]
+        ]
+      },
+      "gain_quarter": {
+        "balanced_accuracy": 0.83125,
+        "roc_auc": 0.9215625,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            68,
+            12
+          ],
+          [
+            15,
+            65
+          ]
+        ],
+        "prediction_agreement": 1.0,
+        "mean_absolute_margin_change": 8.014422459012849e-16
+      },
+      "noise_20db": {
+        "balanced_accuracy": 0.875,
+        "roc_auc": 0.9168749999999999,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            77,
+            3
+          ],
+          [
+            17,
+            63
+          ]
+        ],
+        "prediction_agreement": 0.86875,
+        "mean_absolute_margin_change": 2.4373903805759984
+      },
+      "boundary_minus_20ms": {
+        "balanced_accuracy": 0.7875,
+        "roc_auc": 0.8843749999999999,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            63,
+            17
+          ],
+          [
+            17,
+            63
+          ]
+        ],
+        "prediction_agreement": 0.85625,
+        "mean_absolute_margin_change": 2.621221270642523
+      },
+      "boundary_plus_20ms": {
+        "balanced_accuracy": 0.80625,
+        "roc_auc": 0.88,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            64,
+            16
+          ],
+          [
+            15,
+            65
+          ]
+        ],
+        "prediction_agreement": 0.8375,
+        "mean_absolute_margin_change": 2.8254992059192703
+      },
+      "central_160ms": {
+        "balanced_accuracy": 0.825,
+        "roc_auc": 0.9204687500000001,
+        "n": 160,
+        "speakers": 39,
+        "confusion_matrix": [
+          [
+            68,
+            12
+          ],
+          [
+            16,
+            64
+          ]
+        ],
+        "prediction_agreement": 0.99375,
+        "mean_absolute_margin_change": 0.35881709531472794
+      }
+    },
+    "robustness_pass": false,
+    "demo_eligible": false
+  }
+}
