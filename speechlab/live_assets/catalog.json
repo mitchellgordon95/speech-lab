@@ -366,26 +366,6 @@
           ],
           "examples": [
             {
-              "id": "A4_2-75",
-              "utterance": "A4_2",
-              "speaker": "A4",
-              "phone": "a",
-              "original_label": "a˥˩ː",
-              "start": 9.5,
-              "end": 9.67,
-              "word": "大忙人。",
-              "word_start": 9.45,
-              "word_end": 10.17,
-              "split": "train",
-              "file": "mandarin-0-0.flac",
-              "point": [
-                -0.9607203026470407,
-                -0.51353069196764
-              ],
-              "excerpt_start": 9.425,
-              "excerpt_end": 10.195
-            },
-            {
               "id": "A13_90-96",
               "utterance": "A13_90",
               "speaker": "A13",
@@ -397,7 +377,7 @@
               "word_start": 8.1,
               "word_end": 8.61,
               "split": "train",
-              "file": "mandarin-0-1.flac",
+              "file": "mandarin-0-0.flac",
               "point": [
                 -0.7749172825467434,
                 -0.14223571208461971
@@ -417,13 +397,33 @@
               "word_start": 5.65,
               "word_end": 6.17,
               "split": "train",
-              "file": "mandarin-0-2.flac",
+              "file": "mandarin-0-1.flac",
               "point": [
                 -1.0054783214359135,
                 -0.456552003508692
               ],
               "excerpt_start": 5.625,
               "excerpt_end": 6.195
+            },
+            {
+              "id": "B31_406-47",
+              "utterance": "B31_406",
+              "speaker": "B31",
+              "phone": "a",
+              "original_label": "a˧˩˧ˑ",
+              "start": 5.62,
+              "end": 5.79,
+              "word": "厂",
+              "word_start": 5.51,
+              "word_end": 5.87,
+              "split": "validation",
+              "file": "mandarin-0-2.flac",
+              "point": [
+                -1.1375270059622105,
+                -0.4460634334155376
+              ],
+              "excerpt_start": 5.485,
+              "excerpt_end": 5.895
             }
           ]
         },

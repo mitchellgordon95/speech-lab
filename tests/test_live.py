@@ -2,6 +2,7 @@ import json
 
 import numpy as np
 import pytest
+import soundfile as sf
 from fastapi.testclient import TestClient
 
 from research.mandarin_map import fit_projection
@@ -94,3 +95,13 @@ def test_reference_assets_have_development_sources_and_finite_regions():
                     assert example["split"] != "test"
                     result = client.get(f"/api/live/{m['id']}/example/{c['phone']}/{index}")
                     assert result.content[:4] == b"fLaC"
+                    wave, sr = sf.read(live.reference(m["id"], c["phone"], index))
+                    assert sr == 16000
+                    start = round(
+                        ((example["start"] + example["end"]) / 2 - 0.08 - example["excerpt_start"]) * sr
+                    )
+                    phone = wave[start : start + live.WINDOW_SAMPLES]
+                    assert len(phone) == live.WINDOW_SAMPLES
+                    assert np.mean(np.abs(phone) > 0.99) <= 0.01
+                    assert np.mean(np.abs(wave) > 0.99) <= 0.01
+                    assert np.sqrt(np.mean((phone - phone.mean()) ** 2)) >= 0.002

@@ -197,6 +197,7 @@ function renderMap(ident) {
     };
     play.onclick = async () => {
       stop();
+      const playbackGeneration = generation;
       const e = c.examples[index];
       reference = true;
       target = [...e.point];
@@ -212,7 +213,8 @@ function renderMap(ident) {
       try {
         await player.play();
       } catch {
-        status("Could not play this reference. Try again.");
+        if (playbackGeneration === generation)
+          status("Could not play this reference. Try again.");
       }
     };
     row.append(phone, play, next);

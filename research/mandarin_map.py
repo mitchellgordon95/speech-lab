@@ -97,6 +97,44 @@ def serializable(p):
     return {k: v.tolist() if isinstance(v, np.ndarray) else v for k, v in p.items()}
 
 
+def reference_examples(ident, n, indices, samples, points):
+    """Choose distinct development voices with simple playback-quality checks."""
+    examples = []
+    used_speakers, used_words = set(), set()
+    for i in sorted(indices, key=lambda i: stable(samples[i]["id"])):
+        row = samples[i]
+        if row["speaker"] in used_speakers or row["word"] in used_words:
+            continue
+        wave = utterance(row["utterance"])
+        a = max(0, round((row["word_start"] - 0.025) * 16000))
+        b = min(len(wave), round((row["word_end"] + 0.025) * 16000))
+        phone_wave = crop(row)
+        excerpt = wave[a:b]
+        if (
+            np.mean(np.abs(phone_wave) > 0.99) > 0.01
+            or np.mean(np.abs(excerpt) > 0.99) > 0.01
+            or np.sqrt(np.mean((phone_wave - phone_wave.mean()) ** 2)) < 0.002
+        ):
+            continue
+        used_speakers.add(row["speaker"])
+        used_words.add(row["word"])
+        file = f"{ident}-{n}-{len(examples)}.flac"
+        sf.write(live.ASSETS / "audio" / file, wave[a:b], 16000, subtype="PCM_16")
+        examples.append(
+            {
+                **row,
+                "file": file,
+                "point": points[i].tolist(),
+                "excerpt_start": a / 16000,
+                "excerpt_end": b / 16000,
+            }
+        )
+        if len(examples) == 3:
+            break
+    assert len(examples) == 3
+    return examples
+
+
 def main():
     samples = json.loads((BASE / "manifest.json").read_text())
     labels = np.array([s["phone"] for s in samples])
@@ -205,29 +243,7 @@ def main():
                 "points": points[sorted(indices, key=lambda i: stable(samples[i]["id"]))[:50]].tolist(),
                 "examples": [],
             }
-            used_speakers, used_words = set(), set()
-            for i in sorted(indices, key=lambda i: stable(samples[i]["id"])):
-                row = samples[i]
-                if row["speaker"] in used_speakers or row["word"] in used_words:
-                    continue
-                used_speakers.add(row["speaker"])
-                used_words.add(row["word"])
-                wave = utterance(row["utterance"])
-                a = max(0, round((row["word_start"] - 0.025) * 16000))
-                b = min(len(wave), round((row["word_end"] + 0.025) * 16000))
-                file = f"{ident}-{n}-{len(category['examples'])}.flac"
-                sf.write(live.ASSETS / "audio" / file, wave[a:b], 16000, subtype="PCM_16")
-                category["examples"].append(
-                    {
-                        **row,
-                        "file": file,
-                        "point": points[i].tolist(),
-                        "excerpt_start": a / 16000,
-                        "excerpt_end": b / 16000,
-                    }
-                )
-                if len(category["examples"]) == 3:
-                    break
+            category["examples"] = reference_examples(ident, n, indices, samples, points)
             m["categories"].append(category)
         extent = np.quantile(np.abs(points[dev]), 0.98, axis=0)
         # A square, fixed viewport preserves the distance geometry on both axes.

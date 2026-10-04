@@ -44,6 +44,8 @@ summary:focus-visible {
   outline-offset: 5px;
 }
 .site-header {
+  flex-wrap: wrap;
+  gap: 16px;
   max-width: 1200px;
   margin: auto;
   padding: 27px 36px;
@@ -74,6 +76,7 @@ summary:focus-visible {
 }
 .site-header nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 30px;
   font-size: 13px;
 }
