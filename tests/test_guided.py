@@ -1,4 +1,5 @@
 import json
+import time
 
 import numpy as np
 import pytest
@@ -8,7 +9,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-from speechlab import guided, phonetics
+from speechlab import audio, guided, phonetics, store
 from speechlab.app import app
 
 
@@ -82,3 +83,43 @@ def test_guided_api_validates_before_queueing():
         assert client.post("/api/guided/analyze", json={"contrast": "../../.env"}).status_code == 400
         assert client.get(f"/api/guided/{c}/example/0/99/word").status_code == 400
         assert client.get(f"/api/guided/{c}/example/0/0/word").headers["content-type"] == "audio/flac"
+
+
+@pytest.mark.parametrize("contrast", ["s_sh", "r_l", "iy_ih"])
+@pytest.mark.parametrize("voiced", [False, True])
+def test_guided_recording_result_saves_and_serializes(contrast, voiced, monkeypatch):
+    # Keep the encoder deterministic and confident, so the real voicing check
+    # decides the flag rather than an earlier low-confidence branch masking it.
+    monkeypatch.setattr(guided, "represent", lambda wave, name: np.array([2.0]))
+    monkeypatch.setattr(
+        guided,
+        "probe",
+        lambda ident: {
+            "representation": "test",
+            "impute": [0.0],
+            "mean": [0.0],
+            "scale": [1.0],
+            "coef": [1.0],
+            "intercept": 0.0,
+        },
+    )
+    wave = (
+        np.sin(np.arange(16000) * 2 * np.pi * 200 / 16000) * 0.1
+        if voiced
+        else np.random.default_rng(9).normal(0, 0.05, 16000)
+    )
+    with TestClient(app) as client:
+        clip = client.post("/api/clips", files={"file": ("sound.wav", audio.wav_bytes(wave, 16000))}).json()
+        response = client.post("/api/guided/analyze", json={"contrast": contrast, "clip_id": clip["id"]})
+        assert response.status_code == 200
+        job = response.json()
+        deadline = time.monotonic() + 5
+        while job["status"] in ("queued", "running") and time.monotonic() < deadline:
+            time.sleep(0.01)
+            job = client.get(f"/api/jobs/{job['id']}").json()
+        assert job["status"] == "done", job
+        result = job["result"]
+        wrong_kind = voiced if contrast == "s_sh" else not voiced
+        assert result["uncertain"] is wrong_kind
+        assert (result["position"] is None) is wrong_kind
+        assert store.read("results", result["id"])["uncertain"] is wrong_kind

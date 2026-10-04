@@ -108,8 +108,10 @@ def analyze(ident, clip_id=None, example=None, progress=lambda _: None):
     positions = expit(values)
     agreement = float(np.mean((values > 0) == (center > 0)))
     # These are conservative UX checks, not a validated open-set speech detector.
-    wrong_kind = not is_example and (
-        (ident == "s_sh" and acoustics[12] > 0.5) or (ident != "s_sh" and acoustics[12] < 0.2)
+    # NumPy comparisons yield np.bool_; keep flags native for JSON persistence/API responses.
+    wrong_kind = bool(
+        not is_example
+        and ((ident == "s_sh" and acoustics[12] > 0.5) or (ident != "s_sh" and acoustics[12] < 0.2))
     )
     uncertain = abs(center) < 0.6 or agreement < 0.72 or wrong_kind
     side = int(center > 0)
