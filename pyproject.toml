@@ -1,0 +1,29 @@
+[project]
+name = "speech-lab"
+version = "0.1.0"
+description = "A local workbench for visual pronunciation experiments"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "fastapi>=0.115,<1", "uvicorn>=0.34,<1", "python-multipart>=0.0.20",
+  "numpy>=2,<3", "scipy>=1.14,<2", "soundfile>=0.13,<1",
+  "praat-parselmouth>=0.4.6,<1", "scikit-learn>=1.6,<2",
+  "torch>=2.8,<3", "transformers>=5.18,<6", "huggingface-hub>=1,<2",
+  "safetensors>=0.6", "httpx>=0.28,<1", "python-dotenv>=1,<2",
+  "librosa>=0.11,<1"
+]
+[dependency-groups]
+dev = ["pytest>=8", "playwright>=1.50", "ruff>=0.11"]
+[project.scripts]
+speech-lab = "speechlab.cli:main"
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+[tool.hatch.build.targets.wheel]
+packages = ["speechlab", "demos"]
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+[tool.ruff]
+line-length = 110
+extend-exclude = [".bootstrap", ".python", ".cache", "data", "models"]
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]

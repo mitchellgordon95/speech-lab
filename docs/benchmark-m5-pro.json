@@ -1,0 +1,75 @@
+[
+  {
+    "model": "wavlm-base",
+    "ok": true,
+    "revision": "4c66d4806a428f2e922ccfa1a962776e232d487b",
+    "frames": 44,
+    "dimensions": 768,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 2.922,
+    "warm_inference_seconds": 0.013
+  },
+  {
+    "model": "wavlm-large",
+    "ok": true,
+    "revision": "c1423ed94bb01d80a3f5ce5bc39f6026a0f4828c",
+    "frames": 44,
+    "dimensions": 1024,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 0.7,
+    "warm_inference_seconds": 0.015
+  },
+  {
+    "model": "xls-r",
+    "ok": true,
+    "revision": "1a640f32ac3e39899438a2931f9924c02f080a54",
+    "frames": 44,
+    "dimensions": 1024,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 1.059,
+    "warm_inference_seconds": 0.018
+  },
+  {
+    "model": "qwen-asr",
+    "ok": true,
+    "revision": "7f1569a48a89f3e3f4dc3a5c9d28bddd903bc76c",
+    "frames": 12,
+    "dimensions": 896,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 0.46,
+    "warm_inference_seconds": 0.062
+  },
+  {
+    "model": "qwen-asr-large",
+    "ok": true,
+    "revision": "bcd2b5b7f32b480ab5790554cfa8347f246a14f3",
+    "frames": 12,
+    "dimensions": 1024,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 0.584,
+    "warm_inference_seconds": 0.069
+  },
+  {
+    "model": "qwen-omni",
+    "ok": true,
+    "revision": "26291f793822fb6be9555850f06dfe95f2d7e695",
+    "frames": 12,
+    "dimensions": 2048,
+    "device": "mps",
+    "audio_seconds": 0.9,
+    "load_and_first_inference_seconds": 1.271,
+    "warm_inference_seconds": 0.048
+  },
+  {
+    "model": "sparc",
+    "ok": true,
+    "frames": 45,
+    "device": "mps",
+    "load_and_inference_seconds": 0.576
+  }
+]

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Speech Lab · See what changes</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <a class="brand" href="#home"
+        ><span class="brand-mark" aria-hidden="true">≋</span> Speech Lab<span
+          class="version"
+          >01</span
+        ></a
+      >
+      <div class="sidebar-label">THE WORKBENCH</div>
+      <nav id="navigation" aria-label="Experiments"></nav>
+      <div class="sidebar-bottom">
+        <span class="status-dot"></span><span id="device">Connecting…</span>
+        <p>Your voice, on your machine.<br />Cloud comparisons are optional.</p>
+        <a href="/docs" target="_blank">API reference ↗</a>
+      </div>
+    </aside>
+    <main>
+      <header class="topbar">
+        <span id="breadcrumb">EXPERIMENTS / OVERVIEW</span>
+        <div>
+          <button id="seed" class="text-button">Load synthetic examples</button
+          ><a class="text-button" href="/api/export">Export session ↗</a>
+        </div>
+      </header>
+      <div id="view"></div>
+      <footer>
+        Speech Lab is an experimental workbench. Measurements and model outputs
+        are evidence to investigate, not a clinical assessment.
+      </footer>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="library-dialog">
+      <div class="dialog-head">
+        <div>
+          <span class="eyebrow">YOUR RECORDINGS</span>
+          <h2>Recording library</h2>
+        </div>
+        <button id="close-library" aria-label="Close recording library">
+          Close
+        </button>
+      </div>
+      <div id="library-content"></div>
+    </dialog>
+  </body>
+</html>
