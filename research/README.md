@@ -32,3 +32,15 @@ Download each encoder once using the workbench benchmark before offline feature 
 The corpus tests sound discrimination and repeatability. It cannot establish learner improvement, human intelligibility judgments, Mandarin transfer, or true articulator positions. Paid cloud assessors are not run because no credentials were supplied. The new demos expose only supported English contrasts with pre-fitted models, native recordings, and a record/play interaction.
 
 `adaptation.py` is an explicitly exploratory control added after the main test: both personal and other-speaker methods get two accepted anchors per category, with repeated paired queries. It addresses the unequal reference counts in the original adaptation comparison. It has no effect on model selection or promotion.
+
+## Mandarin live maps
+
+The separate [Mandarin study](MANDARIN.md) uses a frozen [map protocol](mandarin_protocol.json), real THCHS-30 recordings and its own 30/10/10 speaker split. The frontend receives pre-fitted, fixed two-dimensional maps. Reproduction is optional:
+
+```sh
+.venv/bin/python -m research.mandarin_prepare
+HF_HUB_OFFLINE=1 .venv/bin/python -m research.mandarin_features
+HF_HUB_OFFLINE=1 .venv/bin/python -m research.mandarin_map
+```
+
+Preparation downloads five pinned training shards (about 2.9 GB), checks phone and word timing consistency, and extracts selected utterances to ignored `data/mandarin/`. Encoder extraction is checkpointed every 1,000 excerpts. Map fitting saves validation selection before final testing and exports both coefficients and attributed reference audio. Test speakers never supply map regions, orientation, reference examples or encoder selection. The available timings are approximate and are not documented as hand-verified.

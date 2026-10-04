@@ -1,0 +1,317 @@
+{
+  "protocol": {
+    "dataset": "changelinglab/thchs30-segment",
+    "revision": "c8b881592bd339e9cf0483e9d686c832d4e60361",
+    "source": "https://www.openslr.org/18/",
+    "alignment_source": "https://huggingface.co/datasets/anyspeech/THCHS-30-alignments",
+    "alignment_revision": "9bd41492e5dbc9d69a4cbea0acbc03b9b20375a4",
+    "alignment_note": "Provided phone timings; upstream does not document their construction or human verification. Treat as approximate labels.",
+    "seed": 20261005,
+    "source_files": "All five train parquet shards; our own speaker-disjoint 60/20/20 training/validation/test split",
+    "maps": {
+      "vowels": [
+        "a",
+        "ɤ",
+        "i",
+        "o",
+        "u",
+        "y"
+      ],
+      "consonants": [
+        "s",
+        "ʂ",
+        "ɕ"
+      ],
+      "mandarin": [
+        "a",
+        "ɤ",
+        "i",
+        "o",
+        "u",
+        "y",
+        "s",
+        "ʂ",
+        "ɕ"
+      ]
+    },
+    "selection": "At most 20 tokens per phone per speaker, hash order, unique source word per phone/speaker; duration 160–400 ms, exact central 160 ms input, no tone/length marks in category labels",
+    "representations": [
+      "wavlm-base",
+      "qwen-asr-large",
+      "qwen-omni"
+    ],
+    "projection": "Compare standardization + PCA96 + shrinkage LDA2 with direct class-balanced Ridge prediction of two fixed target coordinates. Choose encoder/method/alpha by validation nearest-centroid balanced accuracy. Persist selection, refit on development, evaluate final test once. Separate-map LDA validation is retained as a comparison only.",
+    "coordinates": "Rotate/reflect using development class means and divide each coordinate by a common scale. No online refitting or speaker-dependent coordinate rotation. Native ellipses use development samples only.",
+    "latency": "Rolling 160 ms audio window, 80 ms hop; one local inference request in flight, discard stale windows; animation interpolates results without pretending to increase measurement rate",
+    "evaluation": "Final test balanced accuracy in 2D, per-class recall, 95% bootstrap interval by speaker, and +/-20 ms crop shift. Publish overlap honestly. Binary English results do not validate these Mandarin maps.",
+    "shared_map_amendment": "User clarified one shared map after feature extraction and initial separate-map validation, before any final-test evaluation. Shared ASR LDA validation was 51.4%; validation exploration of direct coordinate regression was stronger. Final selection compares all three encoders with LDA or class-balanced Ridge (alpha 10, 100, 1000) after training-only standardization and PCA96. Only the shared map is deployed and final-tested. Validation was used for method development; it is not an unbiased performance estimate.",
+    "shared_targets": {
+      "order": [
+        "i",
+        "y",
+        "u",
+        "o",
+        "ɤ",
+        "a",
+        "ɕ",
+        "ʂ",
+        "s"
+      ],
+      "coordinates": "Unit circle, angle=2*pi*index/9. These fixed layout targets are arbitrary display positions, not anatomical coordinates. Ridge predicts continuous coordinates directly; no softmax, snapping or forced category choice."
+    }
+  },
+  "corpus": {
+    "tokens": 6819,
+    "speakers": {
+      "train": 30,
+      "validation": 10,
+      "test": 10
+    },
+    "counts": {
+      "train/s": 327,
+      "train/ʂ": 473,
+      "train/i": 567,
+      "train/ɕ": 398,
+      "train/ɤ": 554,
+      "train/u": 571,
+      "train/y": 565,
+      "train/a": 567,
+      "train/o": 189,
+      "test/s": 126,
+      "test/o": 39,
+      "test/ɕ": 121,
+      "test/ʂ": 149,
+      "test/i": 165,
+      "test/u": 161,
+      "test/a": 166,
+      "test/y": 162,
+      "test/ɤ": 167,
+      "validation/ɤ": 180,
+      "validation/a": 174,
+      "validation/ʂ": 171,
+      "validation/i": 184,
+      "validation/ɕ": 131,
+      "validation/u": 181,
+      "validation/y": 177,
+      "validation/s": 105,
+      "validation/o": 49
+    },
+    "protocol": {
+      "dataset": "changelinglab/thchs30-segment",
+      "revision": "c8b881592bd339e9cf0483e9d686c832d4e60361",
+      "source": "https://www.openslr.org/18/",
+      "alignment_source": "https://huggingface.co/datasets/anyspeech/THCHS-30-alignments",
+      "alignment_revision": "9bd41492e5dbc9d69a4cbea0acbc03b9b20375a4",
+      "alignment_note": "Provided phone timings; upstream does not document their construction or human verification. Treat as approximate labels.",
+      "seed": 20261005,
+      "source_files": "All five train parquet shards; our own speaker-disjoint 60/20/20 training/validation/test split",
+      "maps": {
+        "vowels": [
+          "a",
+          "ɤ",
+          "i",
+          "o",
+          "u",
+          "y"
+        ],
+        "consonants": [
+          "s",
+          "ʂ",
+          "ɕ"
+        ]
+      },
+      "selection": "At most 20 tokens per phone per speaker, hash order, unique source word per phone/speaker; duration 160–400 ms, exact central 160 ms input, no tone/length marks in category labels",
+      "representations": [
+        "wavlm-base",
+        "qwen-asr-large",
+        "qwen-omni"
+      ],
+      "projection": "Training-fitted standardization, PCA up to 96 dimensions, shrinkage LDA to two fixed dimensions. Select encoder by validation nearest-centroid balanced accuracy in the 2D map, then refit on development speakers. Final test speakers never choose orientation, references, or model.",
+      "coordinates": "Rotate/reflect using development class means and divide each coordinate by a common scale. No online refitting or speaker-dependent coordinate rotation. Native ellipses use development samples only.",
+      "latency": "Rolling 160 ms audio window, 80 ms hop; one local inference request in flight, discard stale windows; animation interpolates results without pretending to increase measurement rate",
+      "evaluation": "Final test balanced accuracy in 2D, per-class recall, 95% bootstrap interval by speaker, and +/-20 ms crop shift. Publish overlap honestly. Binary English results do not validate these Mandarin maps."
+    }
+  },
+  "selection": {
+    "vowels": {
+      "validation": {
+        "wavlm-base/lda/100": 0.6742926018720947,
+        "qwen-asr-large/lda/100": 0.8216094230295177,
+        "qwen-omni/lda/100": 0.7666365425271776
+      },
+      "model": "qwen-asr-large",
+      "method": "lda",
+      "alpha": 100
+    },
+    "consonants": {
+      "validation": {
+        "wavlm-base/lda/100": 0.6067441717100214,
+        "qwen-asr-large/lda/100": 0.9508844205509531,
+        "qwen-omni/lda/100": 0.9532061706428921
+      },
+      "model": "qwen-omni",
+      "method": "lda",
+      "alpha": 100
+    },
+    "mandarin": {
+      "validation": {
+        "wavlm-base/lda/100": 0.542375900102372,
+        "wavlm-base/ridge/10": 0.5727376326287841,
+        "wavlm-base/ridge/100": 0.5718894562080886,
+        "wavlm-base/ridge/1000": 0.5704023304214245,
+        "qwen-asr-large/lda/100": 0.5136728662918786,
+        "qwen-asr-large/ridge/10": 0.8827431688136029,
+        "qwen-asr-large/ridge/100": 0.8827431688136029,
+        "qwen-asr-large/ridge/1000": 0.8821154224231447,
+        "qwen-omni/lda/100": 0.6388921271948449,
+        "qwen-omni/ridge/10": 0.8673422398034656,
+        "qwen-omni/ridge/100": 0.8673422398034656,
+        "qwen-omni/ridge/1000": 0.8673288205871479
+      },
+      "model": "qwen-asr-large",
+      "method": "ridge",
+      "alpha": 10
+    }
+  },
+  "maps": {
+    "mandarin": {
+      "model": "qwen-asr-large",
+      "balanced_accuracy": 0.8728875684555516,
+      "speaker_bootstrap_95": [
+        0.8469948541891794,
+        0.9004472085070367
+      ],
+      "recall": {
+        "a": 0.9096385542168675,
+        "ɤ": 0.8802395209580839,
+        "i": 0.9575757575757575,
+        "o": 0.8974358974358975,
+        "u": 0.9316770186335404,
+        "y": 0.9074074074074074,
+        "s": 0.9126984126984127,
+        "ʂ": 0.7651006711409396,
+        "ɕ": 0.6942148760330579
+      },
+      "confusion": [
+        [
+          151,
+          15,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          2,
+          147,
+          0,
+          18,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          158,
+          0,
+          0,
+          3,
+          2,
+          0,
+          1
+        ],
+        [
+          0,
+          3,
+          0,
+          35,
+          1,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          10,
+          150,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          12,
+          1,
+          2,
+          147,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          115,
+          11,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          26,
+          114,
+          9
+        ],
+        [
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          7,
+          29,
+          84
+        ]
+      ],
+      "phone_order": [
+        "a",
+        "ɤ",
+        "i",
+        "o",
+        "u",
+        "y",
+        "s",
+        "ʂ",
+        "ɕ"
+      ],
+      "tokens": 1256,
+      "speakers": 10,
+      "boundary_shift_balanced_accuracy": {
+        "-20": 0.8635327635327635,
+        "0": 0.896937321937322,
+        "20": 0.8522079772079773
+      },
+      "boundary_shift_tokens": 359
+    }
+  }
+}

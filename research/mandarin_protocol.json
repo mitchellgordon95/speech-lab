@@ -1,0 +1,61 @@
+{
+  "dataset": "changelinglab/thchs30-segment",
+  "revision": "c8b881592bd339e9cf0483e9d686c832d4e60361",
+  "source": "https://www.openslr.org/18/",
+  "alignment_source": "https://huggingface.co/datasets/anyspeech/THCHS-30-alignments",
+  "alignment_revision": "9bd41492e5dbc9d69a4cbea0acbc03b9b20375a4",
+  "alignment_note": "Provided phone timings; upstream does not document their construction or human verification. Treat as approximate labels.",
+  "seed": 20261005,
+  "source_files": "All five train parquet shards; our own speaker-disjoint 60/20/20 training/validation/test split",
+  "maps": {
+    "vowels": [
+      "a",
+      "ɤ",
+      "i",
+      "o",
+      "u",
+      "y"
+    ],
+    "consonants": [
+      "s",
+      "ʂ",
+      "ɕ"
+    ],
+    "mandarin": [
+      "a",
+      "ɤ",
+      "i",
+      "o",
+      "u",
+      "y",
+      "s",
+      "ʂ",
+      "ɕ"
+    ]
+  },
+  "selection": "At most 20 tokens per phone per speaker, hash order, unique source word per phone/speaker; duration 160–400 ms, exact central 160 ms input, no tone/length marks in category labels",
+  "representations": [
+    "wavlm-base",
+    "qwen-asr-large",
+    "qwen-omni"
+  ],
+  "projection": "Compare standardization + PCA96 + shrinkage LDA2 with direct class-balanced Ridge prediction of two fixed target coordinates. Choose encoder/method/alpha by validation nearest-centroid balanced accuracy. Persist selection, refit on development, evaluate final test once. Separate-map LDA validation is retained as a comparison only.",
+  "coordinates": "Rotate/reflect using development class means and divide each coordinate by a common scale. No online refitting or speaker-dependent coordinate rotation. Native ellipses use development samples only.",
+  "latency": "Rolling 160 ms audio window, 80 ms hop; one local inference request in flight, discard stale windows; animation interpolates results without pretending to increase measurement rate",
+  "evaluation": "Final test balanced accuracy in 2D, per-class recall, 95% bootstrap interval by speaker, and +/-20 ms crop shift. Publish overlap honestly. Binary English results do not validate these Mandarin maps.",
+  "shared_map_amendment": "User clarified one shared map after feature extraction and initial separate-map validation, before any final-test evaluation. Shared ASR LDA validation was 51.4%; validation exploration of direct coordinate regression was stronger. Final selection compares all three encoders with LDA or class-balanced Ridge (alpha 10, 100, 1000) after training-only standardization and PCA96. Only the shared map is deployed and final-tested. Validation was used for method development; it is not an unbiased performance estimate.",
+  "shared_targets": {
+    "order": [
+      "i",
+      "y",
+      "u",
+      "o",
+      "ɤ",
+      "a",
+      "ɕ",
+      "ʂ",
+      "s"
+    ],
+    "coordinates": "Unit circle, angle=2*pi*index/9. These fixed layout targets are arbitrary display positions, not anatomical coordinates. Ridge predicts continuous coordinates directly; no softmax, snapping or forced category choice."
+  }
+}

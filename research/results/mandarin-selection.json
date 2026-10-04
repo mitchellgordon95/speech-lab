@@ -1,0 +1,41 @@
+{
+  "vowels": {
+    "validation": {
+      "wavlm-base/lda/100": 0.6742926018720947,
+      "qwen-asr-large/lda/100": 0.8216094230295177,
+      "qwen-omni/lda/100": 0.7666365425271776
+    },
+    "model": "qwen-asr-large",
+    "method": "lda",
+    "alpha": 100
+  },
+  "consonants": {
+    "validation": {
+      "wavlm-base/lda/100": 0.6067441717100214,
+      "qwen-asr-large/lda/100": 0.9508844205509531,
+      "qwen-omni/lda/100": 0.9532061706428921
+    },
+    "model": "qwen-omni",
+    "method": "lda",
+    "alpha": 100
+  },
+  "mandarin": {
+    "validation": {
+      "wavlm-base/lda/100": 0.542375900102372,
+      "wavlm-base/ridge/10": 0.5727376326287841,
+      "wavlm-base/ridge/100": 0.5718894562080886,
+      "wavlm-base/ridge/1000": 0.5704023304214245,
+      "qwen-asr-large/lda/100": 0.5136728662918786,
+      "qwen-asr-large/ridge/10": 0.8827431688136029,
+      "qwen-asr-large/ridge/100": 0.8827431688136029,
+      "qwen-asr-large/ridge/1000": 0.8821154224231447,
+      "qwen-omni/lda/100": 0.6388921271948449,
+      "qwen-omni/ridge/10": 0.8673422398034656,
+      "qwen-omni/ridge/100": 0.8673422398034656,
+      "qwen-omni/ridge/1000": 0.8673288205871479
+    },
+    "model": "qwen-asr-large",
+    "method": "ridge",
+    "alpha": 10
+  }
+}

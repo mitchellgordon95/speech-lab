@@ -1,12 +1,18 @@
 # Speech Lab
 
-A local speech app with **ready-to-use English sound contrasts**, real speech examples, and visual feedback. Listen to different speakers, record one sound, and see which side of the contrast it resembles. No labeling, reference recording, model selection, or training is required.
+A local speech app with **live Mandarin sound maps** and ready-to-use English sound contrasts. Listen to real speakers, use your microphone, and see where your sound lands. No labeling, reference recording, model selection, or training is required.
+
+**[Live Mandarin map](http://127.0.0.1:8767/live.html):** one shared vowel-and-consonant grid, fixed reference regions, and a continuously updating dot with a short trail. It covers a/e/i/o/u/ü and sustained s/sh/x together. Start the microphone and hold a sound. Word buttons play natural Mandarin recordings and mark their measured sound on the same grid. Audio is processed locally and is not saved.
+
+![The shared live Mandarin sound map](docs/live-mandarin.png)
+
+The Mandarin maps were built from **6,819 excerpts from 50 THCHS-30 speakers**, with separate fitting, validation, and test speakers. Three encoders were compared on the actual two-dimensional maps. This is a learned sound space, not a tongue-position diagram or pronunciation grade. [Mandarin results, timing measurements, and limits](research/MANDARIN.md).
 
 The demos come from a completed study of **10,676 sound segments from 80 speakers**, comparing acoustic measurements, six frozen audio encoders (including Qwen3-Omni), learned directions, SPARC estimates, and personal reference centroids. Models were selected on validation speakers and tested on 40 separate speakers, with noise and timestamp checks. [Read the measured results](research/RESULTS.md).
 
 ![Speech Lab's guided sound demos](docs/guided.png)
 
-The measured result is English sound discrimination. Mandarin transfer, learner improvement, and anatomical coaching have not been established. The marker is a position on a learned contrast, not a percent-correct score.
+The English results below measure English sound discrimination. The separate Mandarin study measures Mandarin sound separation. Learner improvement and anatomical coaching have not been established. The markers show positions in learned sound spaces, not percent-correct scores.
 
 The three guided contrasts scored **97.6% S/SH**, **99.1% R/L**, and **92.3% sheep/ship vowels** on the final test (balanced accuracy). Learned encoder directions outperformed the simple acoustic baselines for these contrasts. Qwen3-Omni supplies R/L and the vowel demo; Qwen3-ASR 1.7B supplies S/SH. Raw similarity and two-example personal centroids were weaker. Speaker matching helped in an exploratory equal-size comparison, but that does not establish adaptation without correct personal examples.
 
@@ -18,6 +24,8 @@ The three guided contrasts scored **97.6% S/SH**, **99.1% R/L**, and **92.3% she
 ```
 
 Open **http://127.0.0.1:8767**. Stop with Control-C. On the original Mac, the environment has already been installed.
+
+Open **http://127.0.0.1:8767/live.html** for the live Mandarin grid. Chrome is tested with 16 kHz AudioWorklet capture, 160 ms rolling windows, and an 80 ms hop. The first sound can take a moment while an encoder loads. After that, one request runs at a time and stale windows are discarded. Playing a reference stops the microphone. The two axes and reference regions remain fixed.
 
 Setup uses `uv` and an isolated Python 3.12 environment, downloading them when needed. Browser recordings and formats such as WebM/M4A need **ffmpeg** (`brew install ffmpeg` if missing); WAV import works without it. Chrome is the tested browser. No Node build step, API key, or rented GPU is needed for the local experiments.
 
@@ -63,7 +71,7 @@ Live paid API calls were not performed during setup. [Provider references](docs/
 
 ## Data and development
 
-Personal audio, labels, features, fitted axes, and results stay in ignored `data/`. Model/download caches use ignored `.cache/`. Public CC BY speech crops and our fitted demo coefficients live in `speechlab/guided_assets/`; [per-clip attribution](speechlab/guided_assets/attribution.json) records their sources and timestamps. Aggregate research results are committed; full corpora and feature caches are excluded. **Export session** in the workbench downloads local labels and results without audio. Back up `data/` for a complete session.
+Personal audio, labels, features, fitted axes, and results stay in ignored `data/`. Model/download caches use ignored `.cache/`. Public CC BY English speech crops and fitted demo coefficients live in `speechlab/guided_assets/`; [per-clip attribution](speechlab/guided_assets/attribution.json) records their sources and timestamps. Apache 2.0 Mandarin crops, projections, and an attribution catalog live in [speechlab/live_assets](speechlab/live_assets/README.md). Live microphone windows are not persisted. Aggregate research results are committed; full corpora and feature caches are excluded. **Export session** in the workbench downloads local labels and results without audio. Back up `data/` for a complete session.
 
 ```sh
 .venv/bin/python -m speechlab seed

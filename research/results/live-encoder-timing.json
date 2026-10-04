@@ -1,0 +1,31 @@
+{
+  "hardware": "Apple M5 Pro, 48 GB unified memory, MPS",
+  "input": "160 ms real-speech window, standard level normalization and 0.5 s zero padding; warmed encoder, 40 calls per model",
+  "scope": "Embedding extraction only; excludes microphone buffering, HTTP, display smoothing, cold model load, and live voicing checks",
+  "measurements": [
+    {
+      "model": "wavlm-base",
+      "audio_window_ms": 160,
+      "calls": 40,
+      "median_ms": 7.69,
+      "p95_ms": 9.68,
+      "dimensions": 3072
+    },
+    {
+      "model": "qwen-asr-large",
+      "audio_window_ms": 160,
+      "calls": 40,
+      "median_ms": 32.26,
+      "p95_ms": 34.96,
+      "dimensions": 4096
+    },
+    {
+      "model": "qwen-omni",
+      "audio_window_ms": 160,
+      "calls": 40,
+      "median_ms": 46.75,
+      "p95_ms": 47.69,
+      "dimensions": 8192
+    }
+  ]
+}

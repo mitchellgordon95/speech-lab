@@ -1,3 +1,4 @@
+import asyncio
 import json
 from typing import Literal
 
@@ -9,7 +10,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 from demos import acoustics, articulation, calibration, directions, embeddings, fixtures, providers
 
-from . import audio, guided, jobs, models, store
+from . import audio, guided, jobs, live, models, store
 from .catalog import DEMOS
 from .config import MAX_BYTES, ROOT
 
@@ -104,6 +105,33 @@ class GuidedAnalysis(BaseModel):
 @app.get("/api/guided")
 def guided_catalog():
     return guided.catalog()
+
+
+@app.get("/api/live")
+def live_catalog():
+    return live.catalog()
+
+
+@app.get("/api/live/{ident}/example/{phone}/{index}")
+def live_example(ident: str, phone: str, index: int):
+    return FileResponse(live.reference(ident, phone, index), media_type="audio/flac")
+
+
+@app.post("/api/live/{ident}/frame")
+async def live_frame(ident: str, request: Request):
+    import numpy as np
+
+    live.get_map(ident)
+    payload = bytearray()
+    async for chunk in request.stream():
+        payload.extend(chunk)
+        if len(payload) > live.WINDOW_SAMPLES * 4:
+            raise HTTPException(413, "A live frame must be exactly 160 ms")
+    if len(payload) != live.WINDOW_SAMPLES * 4:
+        raise ValueError("A live frame must be exactly 160 ms of float32 PCM")
+    wave = np.frombuffer(payload, dtype="<f4").copy()
+    # Share the single model worker with recorded analyses; model swaps cannot race.
+    return await asyncio.get_running_loop().run_in_executor(jobs.POOL, live.frame, ident, wave)
 
 
 @app.get("/api/guided/{ident}/example/{side}/{index}/{kind}")

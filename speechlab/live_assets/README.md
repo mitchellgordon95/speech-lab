@@ -1,0 +1,11 @@
+# Mandarin map assets
+
+`catalog.json` describes one fixed shared sound map, reference regions, and 27 natural-word excerpts. Every excerpt includes its original utterance, speaker, phone/word labels, source timestamps, and output crop timestamps. Examples come only from development speakers, chosen by a deterministic hash with distinct speakers and words; they were not picked for looking close to a class center.
+
+Audio: **THCHS-30**, Center for Speech and Language Technologies, Tsinghua University, published by Dong Wang and Xuewei Zhang. [Original corpus](https://www.openslr.org/18/), Apache License 2.0; see the included `LICENSE-THCHS30.txt`. Packaging: [changelinglab/thchs30-segment](https://huggingface.co/datasets/changelinglab/thchs30-segment), pinned revision `c8b881592bd339e9cf0483e9d686c832d4e60361`. Timing labels: [anyspeech/THCHS-30-alignments](https://huggingface.co/datasets/anyspeech/THCHS-30-alignments), pinned revision `9bd41492e5dbc9d69a4cbea0acbc03b9b20375a4`. Their creation and human verification are undocumented in the supplied metadata.
+
+Changes to recordings: word excerpts with up to 25 ms surrounding context, stored as lossless 16 kHz PCM16 FLAC. No synthesis, pitch change, or time stretching. The displayed reference dot is measured from the central 160 ms of the labeled phone, not from the whole played word.
+
+`mandarin.json` holds fitted projection coefficients. Standardization and PCA precede direct regression to two display coordinates. The supervised layout targets arrange nine sounds around a circle; those targets do not represent anatomical positions. Actual dots are continuous predictions and are never snapped to a target or class. A final rigid rotation/reflection and uniform scaling orient the plot without changing its relative distances. Ellipses describe development-speaker variation (80% Gaussian covariance contours), not acceptable pronunciation boundaries. Encoder weights download separately and retain their own licenses.
+
+See [the Mandarin report](../../research/MANDARIN.md) and [frozen protocol](../../research/mandarin_protocol.json). No microphone recordings are included or saved by the live endpoint.

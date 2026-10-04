@@ -1,6 +1,6 @@
 # Upstream work
 
-Speech Lab's own code is MIT licensed. Dependencies and model weights retain their upstream licenses; the repository does not redistribute encoder weights or personal recordings. The small public speech examples described below are distributed under CC BY 4.0.
+Speech Lab's own code is MIT licensed. Dependencies and model weights retain their upstream licenses; the repository does not redistribute encoder weights or personal recordings. English speech examples are CC BY 4.0; Mandarin speech examples are Apache 2.0.
 
 - **WavLM** — Microsoft, [code and paper](https://github.com/microsoft/unilm/tree/master/wavlm), [Base+](https://huggingface.co/microsoft/wavlm-base-plus), [Large](https://huggingface.co/microsoft/wavlm-large).
 - **XLS-R** — Meta/Facebook, [model card and license](https://huggingface.co/facebook/wav2vec2-xls-r-300m).
@@ -18,3 +18,9 @@ The guided demos include short, lossless crops from **LibriSpeech**, by Vassil P
 Word and phone timings: [Loren Lugosch's LibriSpeech alignments](https://zenodo.org/records/2619474), generated with Montreal Forced Aligner. Data packaging: [Kim Gilkey / gilkeyio](https://huggingface.co/datasets/gilkeyio/librispeech-alignments), revision `0daa1eb43dda38ee6ce752e785555380e5628f5c`. These boundaries are automatic, not hand-verified phonetic annotations.
 
 Changes: cropped at word/phone timestamps and encoded as 16 kHz PCM16 FLAC. No speech synthesis, pitch change, or time stretching. [The attribution manifest](speechlab/guided_assets/attribution.json) identifies every source utterance, speaker ID, split and crop timestamp. Full corpora and extracted features remain in ignored `data/research/`. The repository includes aggregate benchmark results and our fitted linear probe coefficients; their upstream encoders download separately.
+
+## Mandarin reference recordings
+
+The live maps include 27 word excerpts from **THCHS-30**, Tsinghua University's Center for Speech and Language Technologies, published by Dong Wang and Xuewei Zhang. [OpenSLR resource 18](https://www.openslr.org/18/), Apache License 2.0. The [license](speechlab/live_assets/LICENSE-THCHS30.txt) and [asset notes](speechlab/live_assets/README.md) accompany the redistributed crops. Audio packaging: [changelinglab/thchs30-segment](https://huggingface.co/datasets/changelinglab/thchs30-segment); timing metadata: [anyspeech/THCHS-30-alignments](https://huggingface.co/datasets/anyspeech/THCHS-30-alignments). Their methods and human verification are undocumented in the supplied metadata.
+
+Changes: cropped to word timestamps with up to 25 ms of surrounding context and encoded as 16 kHz PCM16 FLAC. No synthesis or voice modification. [The map catalog](speechlab/live_assets/catalog.json) records each source utterance, speaker, labels, timestamps, and exact crop boundaries. Dataset revisions and the selection protocol are pinned in [the Mandarin protocol](research/mandarin_protocol.json). Full Mandarin recordings and feature caches stay in ignored `data/mandarin/`. Live microphone windows are neither saved nor included in the repository.

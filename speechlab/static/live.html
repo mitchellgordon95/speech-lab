@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Speech Lab · Live Mandarin map</title>
+    <link rel="stylesheet" href="/live.css" />
+    <script type="module" src="/live.js"></script>
+  </head>
+  <body>
+    <header>
+      <a class="brand" href="/">∿ speech lab<span>.</span></a>
+      <nav><a href="/">English sound pairs ↗</a></nav>
+    </header>
+    <main>
+      <div class="intro">
+        <p class="eyebrow">MANDARIN / LIVE SOUND MAP</p>
+        <h1>See your sound move.</h1>
+        <p>
+          Hold a sound. Your dot moves among reference regions from real
+          Mandarin voices.
+        </p>
+      </div>
+      <section class="instrument" aria-label="Live Mandarin sound map">
+        <div class="map-top">
+          <strong class="map-name"
+            >Vowels + consonants <span>9 sounds · one grid</span></strong
+          >
+          <span class="local"><i></i> On your Mac</span>
+        </div>
+        <div class="transport">
+          <button id="listen" disabled>
+            <span aria-hidden="true">●</span> Start microphone
+          </button>
+          <div class="status-block">
+            <p id="status" role="status">Loading reference map…</p>
+            <p id="detail">Audio stays on this Mac and is not saved.</p>
+          </div>
+          <div class="meter" aria-label="Microphone level">
+            <span id="level"></span>
+          </div>
+        </div>
+        <div class="workspace">
+          <div class="plot-wrap">
+            <canvas
+              id="plot"
+              role="img"
+              aria-label="Fixed two-dimensional sound map. Native sound regions surround a moving microphone dot."
+            ></canvas>
+            <div class="plot-caption">
+              <span class="dot-key"></span><span id="dot-label">Your sound</span
+              ><span class="grid-note">Fixed reference grid</span>
+            </div>
+          </div>
+          <aside>
+            <p class="eyebrow">LISTEN TO A REFERENCE</p>
+            <h2 id="map-title">Mandarin voices</h2>
+            <p class="aside-note" id="map-note">Loading Mandarin voices…</p>
+            <div id="references"></div>
+            <div class="legend">
+              <span>Shaded regions show variation across voices.</span
+              ><span>The amber dot is your current sound.</span>
+            </div>
+          </aside>
+        </div>
+      </section>
+      <details class="explanation">
+        <summary>What does the position mean?</summary>
+        <div>
+          <p>
+            The encoder measures a short window of sound. A fixed projection
+            places it on this grid, using Mandarin recordings to learn which
+            differences matter. The layout is learned from labeled sounds; its
+            left/right and up/down directions have no anatomical meaning. Moving
+            closer to a region means becoming more similar in these two
+            dimensions. The map does not measure tongue position or grade
+            pronunciation.
+          </p>
+          <p>
+            One shared map contains the vowels a / e / i / o / u / ü and the
+            sustained consonants s / sh / x. Tone, stop consonants, and the
+            special “i” in words such as <em>shi</em> are outside this version.
+            Some regions can overlap; two dimensions cannot preserve every sound
+            difference.
+          </p>
+          <p id="evidence"></p>
+          <p>
+            References:
+            <a
+              href="https://www.openslr.org/18/"
+              target="_blank"
+              rel="noreferrer"
+              >THCHS-30</a
+            >
+            (Apache 2.0), via
+            <a
+              href="https://huggingface.co/datasets/changelinglab/thchs30-segment"
+              target="_blank"
+              rel="noreferrer"
+              >changelinglab’s audio package</a
+            >
+            and
+            <a
+              href="https://huggingface.co/datasets/anyspeech/THCHS-30-alignments"
+              target="_blank"
+              rel="noreferrer"
+              >anyspeech’s phone timings</a
+            >. The timing labels have not been independently verified. Reference
+            words retain their natural surrounding sounds.
+          </p>
+        </div>
+      </details>
+    </main>
+    <footer>
+      160 ms listening window · New measurements up to 12 times a second · Local
+      processing
+    </footer>
+  </body>
+</html>
