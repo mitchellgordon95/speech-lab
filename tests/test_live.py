@@ -5,9 +5,24 @@ import pytest
 import soundfile as sf
 from fastapi.testclient import TestClient
 
+from research.mandarin_expand_map import fit as fit_expanded
 from research.mandarin_map import fit_projection
 from speechlab import live, store
 from speechlab.app import app
+
+
+@pytest.mark.parametrize("method", ["ridge", "mlp", "classifier"])
+@pytest.mark.parametrize("pooling", ["four", "mean4"])
+def test_expanded_projection_exports_fitted_predictions(method, pooling):
+    rng = np.random.default_rng(40)
+    labels = np.repeat(["a", "s", "m", "p"], 60)
+    x = rng.normal(size=(240, 96))
+    x[:, :4] += np.eye(4)[np.repeat(np.arange(4), 60)] * 3
+    p = fit_expanded(x, labels, method, 12, pooling=pooling)
+    # fit_expanded checks its exported transform against sklearn predictions.
+    point = live.coordinates(x[0], p)
+    assert point.shape == (2,) and np.isfinite(point).all()
+    np.testing.assert_allclose(point, live.coordinates(x[:1], p)[0], atol=1e-10)
 
 
 @pytest.mark.parametrize("method", ["lda", "ridge"])

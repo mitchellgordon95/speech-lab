@@ -19,6 +19,7 @@ test-results/
 *.m4a
 *.webm
 *.npz
+!speechlab/live_assets/*.npz
 *.safetensors
 *.pt
 *.pkl

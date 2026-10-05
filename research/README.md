@@ -44,3 +44,5 @@ HF_HUB_OFFLINE=1 .venv/bin/python -m research.mandarin_map
 ```
 
 Preparation downloads five pinned training shards (about 2.9 GB), checks phone and word timing consistency, and extracts selected utterances to ignored `data/mandarin/`. Encoder extraction is checkpointed every 1,000 excerpts. Map fitting saves validation selection before final testing and exports both coefficients and attributed reference audio. Test speakers never supply map regions, orientation, reference examples or encoder selection. The available timings are approximate and are not documented as hand-verified.
+
+The [expanded inventory study](MANDARIN_EXPANDED.md) covers all 21 initial consonants, final ng, and six vowels. Its protocol documents the timing-robustness and category-projection iterations, with earlier results preserved. Run its preparation, feature extraction, jitter extraction and `mandarin_expand_map --jitter` after the original map to reproduce the final two-version catalog. Research audio and feature caches remain outside Git.

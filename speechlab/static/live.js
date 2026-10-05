@@ -21,6 +21,10 @@ let target = null,
   lastPoint = 0,
   lastStatus = "",
   reference = false;
+let family = "all",
+  frozenAt = null,
+  segment = 0,
+  wasActive = false;
 let width = 500,
   height = 500,
   frameCount = 0,
@@ -39,6 +43,14 @@ function clearPoint() {
   displayed = null;
   trail = [];
   lastPoint = 0;
+  frozenAt = null;
+  segment = 0;
+  wasActive = false;
+}
+function visibleCategories() {
+  return map.categories.filter(
+    (c) => family === "all" || (c.family || c.kind) === family,
+  );
 }
 function transform(point) {
   const size = Math.min(width, height) - 55,
@@ -49,6 +61,8 @@ function draw(now) {
   requestAnimationFrame(draw);
   ctx.clearRect(0, 0, width, height);
   if (!map) return;
+  now = frozenAt ?? now;
+  const trailDuration = map.id === "mandarin-all" ? 4000 : 1600;
   const size = Math.min(width, height) - 55,
     left = (width - size) / 2,
     top = (height - size) / 2;
@@ -69,7 +83,7 @@ function draw(now) {
   ctx.beginPath();
   ctx.rect(left, top, size, size);
   ctx.clip();
-  for (const c of map.categories) {
+  for (const c of visibleCategories()) {
     const [x, y] = transform(c.center),
       cov = c.covariance;
     const delta = Math.sqrt((cov[0][0] - cov[1][1]) ** 2 + 4 * cov[0][1] ** 2);
@@ -95,23 +109,31 @@ function draw(now) {
       ctx.fill();
     }
   }
-  trail = trail.filter((p) => now - p.time < 1600);
-  for (let n = 1; n < trail.length; n++) {
-    const a = transform(trail[n - 1].point),
+  trail = trail.filter((p) => now - p.time < trailDuration);
+  for (let n = 0; n < trail.length; n++) {
+    const a = transform(trail[Math.max(0, n - 1)].point),
       b = transform(trail[n].point);
-    ctx.globalAlpha = Math.max(0, 1 - (now - trail[n].time) / 1600) * 0.5;
+    ctx.globalAlpha =
+      Math.max(0, 1 - (now - trail[n].time) / trailDuration) * 0.5;
     ctx.strokeStyle = "#b97922";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(...a);
-    ctx.lineTo(...b);
-    ctx.stroke();
+    if (n > 0 && trail[n - 1].segment === trail[n].segment) {
+      ctx.moveTo(...a);
+      ctx.lineTo(...b);
+      ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.arc(...b, 2.2, 0, Math.PI * 2);
+    ctx.fillStyle = "#b97922";
+    ctx.fill();
   }
   ctx.globalAlpha = 1;
   ctx.restore();
-  for (const c of map.categories) {
+  for (const c of visibleCategories()) {
     const [x, y] = transform(c.center);
-    ctx.font = "600 19px system-ui";
+    ctx.font =
+      map.categories.length > 9 ? "600 15px system-ui" : "600 19px system-ui";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.lineWidth = 5;
@@ -161,9 +183,33 @@ function renderMap(ident) {
   $("map-title").textContent = "Mandarin voices";
   $("map-note").textContent =
     "Each word contains the labeled sound. Play a voice to see its reference dot; ↻ changes the speaker.";
+  family = "all";
+  $("map-select").value = ident;
+  $("family-select").replaceChildren(new Option("All sounds", "all"));
+  for (const f of map.families || [
+    { id: "vowel", label: "Vowels" },
+    { id: "consonant", label: "Consonants" },
+  ])
+    $("family-select").append(new Option(f.label, f.id));
+  $("map-note").textContent =
+    map.description ||
+    "Hold a sound. Each word contains the labeled sound; ↻ changes the speaker.";
+  renderReferences();
+  $("map-method").textContent =
+    map.projection_kind === "category_blend"
+      ? "The expanded map scores resemblance to 28 known sound categories, then blends their assigned screen positions using those scores. The clouds show where real recordings land. This is a category-resemblance display: its distances are not acoustic or anatomical measurements. An unfamiliar or mixed sound can still land inside the map, so proximity is not a pronunciation grade."
+      : "The original map uses a small regression to turn audio-encoder features directly into two coordinates. Its nine sound categories were assigned rough positions around a circle before fitting. The clouds show where real recordings land. Directions have no anatomical meaning, and proximity is not a pronunciation grade.";
+  const t = map.test;
+  $("evidence").textContent =
+    `This ${map.name.toLowerCase()} map uses ${map.model}. On ${t.tokens} labeled sounds from ${t.speakers} speakers excluded from fitting, its nearest-center balanced accuracy was ${(t.balanced_accuracy * 100).toFixed(1)}%. This checks separation of native speech; it does not establish how well the map diagnoses learner errors. Regions are covariance ellipses fitted to the development voices (an 80% contour under a Gaussian approximation).`;
+  $("listen").disabled = false;
+  status("Ready when you are.", "Audio stays on this Mac and is not saved.");
+}
+
+function renderReferences() {
   const container = $("references");
   container.replaceChildren();
-  for (const c of map.categories) {
+  for (const c of visibleCategories()) {
     let index = 0;
     const row = document.createElement("div");
     row.className = "reference";
@@ -220,14 +266,9 @@ function renderMap(ident) {
     row.append(phone, play, next);
     container.append(row);
   }
-  const t = map.test;
-  $("evidence").textContent =
-    `This ${map.name.toLowerCase()} map uses ${map.model}. On ${t.tokens} labeled sounds from ${t.speakers} speakers held out from fitting and model selection, its nearest-center balanced accuracy was ${(t.balanced_accuracy * 100).toFixed(1)}%. This checks separation of native speech; it does not establish how well the map diagnoses learner errors. Regions are covariance ellipses fitted to the development voices (an 80% contour under a Gaussian approximation).`;
-  $("listen").disabled = false;
-  status("Ready when you are.", "Audio stays on this Mac and is not saved.");
 }
 
-function stop() {
+function stop(keepTrace = false) {
   generation++;
   running = false;
   starting = false;
@@ -247,12 +288,15 @@ function stop() {
   player?.pause();
   player = null;
   reference = false;
-  clearPoint();
+  if (keepTrace) {
+    frozenAt = performance.now();
+    if (target) displayed = [...target];
+  } else clearPoint();
   $("listen").textContent = "● Start microphone";
   $("listen").dataset.live = "false";
   $("listen").disabled = !map;
   $("level").style.width = "0%";
-  $("dot-label").textContent = "Your sound";
+  $("dot-label").textContent = keepTrace ? "Your trace · frozen" : "Your sound";
 }
 async function send(buffer, token) {
   if (!running || token !== generation) return;
@@ -291,7 +335,8 @@ async function send(buffer, token) {
       reference = false;
       target = [result.x, result.y];
       lastPoint = now;
-      trail.push({ point: [...target], time: now });
+      trail.push({ point: [...target], time: now, segment });
+      wasActive = true;
       frameCount++;
       if (now - intervalStart > 1500) {
         lastRate = `${((frameCount * 1000) / (now - intervalStart)).toFixed(1)} updates/s`;
@@ -307,7 +352,10 @@ async function send(buffer, token) {
         `${lastRate || "Warming up"} · 160 ms window · audio is not saved`,
       );
     } else {
-      clearPoint();
+      target = displayed = null;
+      lastPoint = 0;
+      if (wasActive) segment++;
+      wasActive = false;
       status(
         {
           quiet: "Listening · waiting for a sound",
@@ -363,7 +411,9 @@ async function start() {
     await audioContext.resume();
     if (token !== generation) return;
     source = audioContext.createMediaStreamSource(stream);
-    node = new AudioWorkletNode(audioContext, "sound-window");
+    node = new AudioWorkletNode(audioContext, "sound-window", {
+      processorOptions: { hopSamples: map.hop_ms === 40 ? 640 : 1280 },
+    });
     mute = audioContext.createGain();
     mute.gain.value = 0;
     node.port.onmessage = (e) => send(e.data, token);
@@ -374,7 +424,7 @@ async function start() {
     intervalStart = performance.now();
     lastRate = "";
     $("listen").disabled = false;
-    $("listen").textContent = "■ Stop microphone";
+    $("listen").textContent = "■ Freeze trace";
     $("listen").dataset.live = "true";
     status(
       "Listening · loading the sound model…",
@@ -399,11 +449,19 @@ async function start() {
 }
 $("listen").onclick = () => {
   if (running || starting) {
-    stop();
-    status("Microphone stopped.", "Audio stays on this Mac and is not saved.");
+    stop(true);
+    status(
+      "Trace frozen · microphone stopped.",
+      "Start again to draw a new trace.",
+    );
   } else start();
 };
-window.addEventListener("pagehide", stop);
+$("map-select").onchange = () => renderMap($("map-select").value);
+$("family-select").onchange = () => {
+  family = $("family-select").value;
+  renderReferences();
+};
+window.addEventListener("pagehide", () => stop());
 document.addEventListener("visibilitychange", () => {
   if (document.hidden && (running || starting)) {
     stop();
@@ -417,7 +475,22 @@ try {
       "Could not load the Mandarin maps. Check the local server.",
     );
   catalog = await response.json();
-  renderMap("mandarin");
+  $("map-select").replaceChildren();
+  for (const m of catalog.maps)
+    $("map-select").append(
+      new Option(
+        m.id === "mandarin"
+          ? "Original · 9 sounds"
+          : `Expanded · ${m.categories.length} sounds`,
+        m.id,
+      ),
+    );
+  const requested = new URLSearchParams(location.search).get("map");
+  renderMap(
+    catalog.maps.some((m) => m.id === requested)
+      ? requested
+      : catalog.default_map || "mandarin",
+  );
 } catch (error) {
   status(error.message);
 }

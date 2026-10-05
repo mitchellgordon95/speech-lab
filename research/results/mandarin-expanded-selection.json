@@ -1,0 +1,130 @@
+{
+  "validation": {
+    "mlp/128/four/False": 0.5264311256972729,
+    "mlp/128/four/True": 0.5422518916565224,
+    "mlp/128/mean4/False": 0.4746639208109049,
+    "mlp/128/mean4/True": 0.46073500023028935,
+    "classifier/128/four/False": 0.8153399756231476,
+    "classifier/128/four/True": 0.8389721267663904
+  },
+  "validation_details": {
+    "mlp/128/four/False": {
+      "centered": 0.6407082518636988,
+      "shifted": 0.41215399953084686
+    },
+    "mlp/128/four/True": {
+      "centered": 0.6009300089757238,
+      "shifted": 0.48357377433732107
+    },
+    "mlp/128/mean4/False": {
+      "centered": 0.5505740297522342,
+      "shifted": 0.39875381186957554
+    },
+    "mlp/128/mean4/True": {
+      "centered": 0.5197429303221784,
+      "shifted": 0.40172707013840026
+    },
+    "classifier/128/four/False": {
+      "centered": 0.8794748140189906,
+      "shifted": 0.7512051372273046
+    },
+    "classifier/128/four/True": {
+      "centered": 0.8733377557612585,
+      "shifted": 0.8046064977715224
+    }
+  },
+  "method": "classifier",
+  "dimensions": 128,
+  "pooling": "four",
+  "augmented": true,
+  "protocol": {
+    "dataset": "Same pinned THCHS-30 source as mandarin_protocol.json; no new download required",
+    "seed": 20261006,
+    "phones": {
+      "a": "a",
+      "ɤ": "e",
+      "i": "i",
+      "o": "o",
+      "u": "u",
+      "y": "ü",
+      "p": "b",
+      "pʰ": "p",
+      "t": "d",
+      "tʰ": "t",
+      "k": "g",
+      "kʰ": "k",
+      "ts": "z",
+      "tsʰ": "c",
+      "ʈʂ": "zh",
+      "ʈʂʰ": "ch",
+      "tɕ": "j",
+      "tɕʰ": "q",
+      "f": "f",
+      "x": "h",
+      "s": "s",
+      "ʂ": "sh",
+      "ɕ": "x",
+      "m": "m",
+      "n": "n",
+      "ŋ": "ng",
+      "l": "l",
+      "ɻ": "r"
+    },
+    "vowels": [
+      "a",
+      "ɤ",
+      "i",
+      "o",
+      "u",
+      "y"
+    ],
+    "selection": "Up to 10 unique source-word tokens per phone/speaker, deterministic hash order; consonants 40–400 ms, vowels 160–400 ms. Exact central 160 ms of original continuous audio, with adjacent context for short phones. Exclude windows and playable word crops with >1% samples at amplitude >0.99 or window AC RMS <0.002. Preserve old 30/10/10 speaker assignment. Previously held-out speakers were used to report the first nine-sound map; this extension is not a claim of never-before-inspected corpus speakers.",
+    "encoder": "qwen-asr-large, chosen in the previous Mandarin study; no new encoder sweep",
+    "layout": "Fixed display grid: vowels, fricatives, sonorants, stops, affricates in separate rows; class labels placed left to right in listed family order. Arbitrary supervised display coordinates, not articulatory axes. All views share one fitted coordinate system.",
+    "families": {
+      "vowels": [
+        "a",
+        "ɤ",
+        "i",
+        "o",
+        "u",
+        "y"
+      ],
+      "fricatives": [
+        "f",
+        "x",
+        "s",
+        "ʂ",
+        "ɕ"
+      ],
+      "sonorants": [
+        "m",
+        "n",
+        "ŋ",
+        "l",
+        "ɻ"
+      ],
+      "stops": [
+        "p",
+        "pʰ",
+        "t",
+        "tʰ",
+        "k",
+        "kʰ"
+      ],
+      "affricates": [
+        "ts",
+        "tsʰ",
+        "ʈʂ",
+        "ʈʂʰ",
+        "tɕ",
+        "tɕʰ"
+      ]
+    },
+    "candidates": "Training-fitted standardization and PCA128/256, followed by class-balanced Ridge alpha100 or smooth MLP regression (128 hidden tanh units, L2 alpha1, learning_rate_init0.001, maximum250 iterations, internal early stopping; training speakers only). Select by validation nearest-center balanced accuracy in the final two display coordinates; save selection before final test. Refit only the selected method on development speakers.",
+    "evaluation": "Report all 28-class and per-class test recalls, family means, 1000 speaker bootstrap interval; 20 tokens per phone on final test for +/-20 and +/-40 ms timing shifts. Adjacent vowels can supply information; this is consonant-containing-window discrimination, not context-free articulation assessment. Corpus phone timestamps are approximate.",
+    "ui": "Preserve original map as an option. Expanded map has all 21 initials + final ng + six vowels; family filters only change region visibility, not coordinates or inference. 160 ms rolling window and 40 ms hop, one inference in flight with stale windows discarded; short events leave a longer visible trail. No claim of automatic phoneme boundary detection or articulatory feedback.",
+    "timing_amendment": "After the centered-window experiment and its held-out timing check revealed strong sensitivity at +/-40 ms, add one deterministic shifted window (-40,-20,+20,+40 ms) for up to three tokens per phone/development speaker. Test speakers supply no augmented training examples. Compare MLP128 with/without this augmentation and with original four-bin features vs their mean; select by the mean of validation centered and validation shifted balanced accuracy. Report the original centered-only result as a baseline. The same test speakers are reused for this engineering iteration; the final result is exploratory, not an untouched confirmatory test.",
+    "category_projection_amendment": "The timing-augmented two-coordinate regression remained weak. A validation-only diagnostic of a class-balanced multinomial logistic classifier (PCA128 unwhitened, C0.1), projecting its softmax scores as a weighted average of fixed display anchors, substantially improved centered and shifted validation separation. Add this candidate with and without training jitter to the same centered/shifted validation selection. It is explicitly a category-score display, not an acoustic-distance or anatomical map; it always interpolates within known categories. Keep prior regression results. The test is reused in this exploratory engineering iteration, never for fitting."
+  }
+}

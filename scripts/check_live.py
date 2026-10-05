@@ -11,7 +11,6 @@ import numpy as np
 import soundfile as sf
 from playwright.sync_api import sync_playwright
 
-from research.mandarin_features import crop
 from speechlab import live
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -24,7 +23,10 @@ def run():
     for c in live.get_map("mandarin")["categories"]:
         if c["phone"] not in ["i", "a", "s", "ʂ", "ɕ"]:
             continue
-        wave = crop(c["examples"][0])
+        example = c["examples"][0]
+        word, sr = sf.read(live.reference("mandarin", c["phone"], 0), dtype="float32")
+        start = round(((example["start"] + example["end"]) / 2 - 0.08 - example["excerpt_start"]) * sr)
+        wave = word[start : start + 2560]
         wave = wave / max(0.001, np.sqrt(np.mean(wave**2))) * 0.06
         pieces.extend([np.tile(wave, 16), np.zeros(4800)])
     fake = OUT / "live-fake-microphone.wav"
@@ -51,7 +53,7 @@ def run():
                 responses.append(r.json())
 
         page.on("response", response)
-        page.goto(URL + "/live.html")
+        page.goto(URL + "/live.html?map=mandarin")
         page.wait_for_function("!document.getElementById('listen').disabled")
         assert page.locator("#references .reference").count() == 9
         page.screenshot(path=OUT / "live-shared.png", full_page=True)
@@ -80,7 +82,7 @@ def run():
         phone = browser.new_context(viewport={"width": 390, "height": 844}, device_scale_factor=1)
         mobile = phone.new_page()
         mobile.on("pageerror", lambda error: errors.append(str(error)))
-        mobile.goto(URL + "/live.html")
+        mobile.goto(URL + "/live.html?map=mandarin")
         mobile.wait_for_function("!document.getElementById('listen').disabled")
         assert mobile.evaluate("document.documentElement.scrollWidth <= innerWidth")
         mobile.screenshot(path=OUT / "live-mobile.png", full_page=True)

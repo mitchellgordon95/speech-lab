@@ -29,6 +29,10 @@ def get_map(ident):
 def projection(ident):
     get_map(ident)
     p = json.loads((ASSETS / f"{ident}.json").read_text())
+    if p.get("arrays_file"):
+        # The catalog-validated map ID determines the archive path, not client input.
+        with np.load(ASSETS / f"{ident}.npz", allow_pickle=False) as saved:
+            p.update({key: saved[key] for key in saved.files})
     return {
         key: np.asarray(value) if key in ("mean", "scale", "basis", "shift", "center", "rotation") else value
         for key, value in p.items()
@@ -36,7 +40,16 @@ def projection(ident):
 
 
 def coordinates(vector, p):
-    xy = ((np.asarray(vector) - p["mean"]) / p["scale"]) @ p["basis"] - p["shift"]
+    vector = np.asarray(vector, dtype=np.float64)
+    if p.get("input_pooling") == "mean4":
+        vector = vector.reshape(*vector.shape[:-1], 4, vector.shape[-1] // 4).mean(axis=-2)
+    xy = ((vector - p["mean"]) / p["scale"]) @ p["basis"] - p["shift"]
+    if p.get("hidden_activation") == "tanh":
+        xy = np.tanh(xy) @ p["output_weight"] + p["output_bias"]
+    elif p.get("hidden_activation") == "softmax":
+        weights = np.exp(xy - np.max(xy, axis=-1, keepdims=True))
+        weights /= weights.sum(axis=-1, keepdims=True)
+        xy = weights @ p["anchors"]
     return (xy - p["center"]) @ p["rotation"] / p["radius"]
 
 

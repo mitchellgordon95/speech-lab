@@ -1,0 +1,15 @@
+{
+  "active_frames": 104,
+  "capture_seconds": 15,
+  "processing_ms_median": 53.49,
+  "processing_ms_p95": 93.975,
+  "x_range": 3.995650387629884,
+  "y_range": 3.999409688530612,
+  "filter_keeps_microphone_running": true,
+  "frozen_trace_stays_fixed": true,
+  "stop_releases_microphone": true,
+  "original_map_available": true,
+  "mobile_overflow": false,
+  "javascript_errors": [],
+  "fixture": "Real public word crops through Chrome fake microphone; software check, not a learner or consonant-recognition evaluation."
+}

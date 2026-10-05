@@ -106,8 +106,9 @@ def reference_examples(ident, n, indices, samples, points):
         if row["speaker"] in used_speakers or row["word"] in used_words:
             continue
         wave = utterance(row["utterance"])
-        a = max(0, round((row["word_start"] - 0.025) * 16000))
-        b = min(len(wave), round((row["word_end"] + 0.025) * 16000))
+        middle = (row["start"] + row["end"]) / 2
+        a = max(0, round(min(row["word_start"] - 0.025, middle - 0.08) * 16000))
+        b = min(len(wave), round(max(row["word_end"] + 0.025, middle + 0.08) * 16000))
         phone_wave = crop(row)
         excerpt = wave[a:b]
         if (

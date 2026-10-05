@@ -440,3 +440,58 @@ aside {
   margin-top: 18px;
   padding-top: 13px;
 }
+.map-controls {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+.map-controls label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 11px;
+  color: #7a8578;
+}
+.map-controls select {
+  font: 600 12px system-ui;
+  color: #3c5143;
+  background: #f6f7f0;
+  border: 1px solid #e1e5d9;
+  padding: 8px 10px;
+  border-radius: 7px;
+  max-width: 210px;
+}
+#references {
+  max-height: 470px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 3px;
+}
+.map-top {
+  gap: 10px;
+}
+.reference button {
+  overflow: hidden;
+}
+.reference button .speaker {
+  flex: none;
+}
+@media (max-width: 720px) {
+  .map-controls {
+    gap: 8px;
+  }
+  .map-controls label {
+    font-size: 10px;
+  }
+  .map-controls select {
+    font-size: 10px;
+    padding: 8px 5px;
+    max-width: 150px;
+  }
+  .map-top .local {
+    display: none;
+  }
+  #references {
+    max-height: 300px;
+  }
+}

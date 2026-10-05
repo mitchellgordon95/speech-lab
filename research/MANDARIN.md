@@ -1,6 +1,8 @@
-# A live, shared Mandarin sound map
+# The original nine-sound Mandarin map
 
-The demo puts **a/e/i/o/u/ü and s/sh/x on one fixed grid**. A rolling 160 ms microphone window becomes an encoder embedding, then two learned coordinates. A short trail makes changes visible. No correct personal reference recordings are required. Start it at [the local live map](http://127.0.0.1:8767/live.html).
+The [expanded map](MANDARIN_EXPANDED.md) adds all Mandarin initials with a different category-score projection. This report describes the original direct regression, retained in the app.
+
+The demo puts **a/e/i/o/u/ü and s/sh/x on one fixed grid**. A rolling 160 ms microphone window becomes an encoder embedding, then two learned coordinates. A short trail makes changes visible. No correct personal reference recordings are required. Start it at [the local live map](http://127.0.0.1:8767/live.html?map=mandarin).
 
 The selected map uses **Qwen3-ASR 1.7B's frozen audio encoder**, training-fitted standardization, PCA96, and a class-balanced linear regression directly predicting two display coordinates. The regression's target layout arranges the nine sound categories around a circle. Actual native reference regions are measured from development recordings; microphone points are continuous predictions, never snapped to class centers. The circle and axis directions are display choices, not tongue positions or a claim that all inter-sound distances have equal perceptual meaning.
 

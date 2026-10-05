@@ -2,11 +2,11 @@
 
 A local speech app with **live Mandarin sound maps** and ready-to-use English sound contrasts. Listen to real speakers, use your microphone, and see where your sound lands. No labeling, reference recording, model selection, or training is required.
 
-**[Live Mandarin map](http://127.0.0.1:8767/live.html):** one shared vowel-and-consonant grid, fixed reference regions, and a continuously updating dot with a short trail. It covers a/e/i/o/u/ü and sustained s/sh/x together. Start the microphone and hold a sound. Word buttons play natural Mandarin recordings and mark their measured sound on the same grid. Audio is processed locally and is not saved.
+**[Live Mandarin map](http://127.0.0.1:8767/live.html):** all **21 Mandarin initials**, final **ng**, and six vowels on one grid. There are 84 natural-word examples in the expanded map. **Show** filters sound families without changing coordinates, and **Freeze trace** stops the microphone and holds the recent path for brief consonants. The previous **Original · 9 sounds** map remains selectable. Audio stays on the Mac and is not saved.
 
-![The shared live Mandarin sound map](docs/live-mandarin.png)
+![The expanded Mandarin sound map](docs/expanded-mandarin.png)
 
-The Mandarin maps were built from **6,819 excerpts from 50 THCHS-30 speakers**, with separate fitting, validation, and test speakers. Three encoders were compared on the actual two-dimensional maps. This is a learned sound space, not a tongue-position diagram or pronunciation grade. [Mandarin results, timing measurements, and limits](research/MANDARIN.md).
+The expanded map uses 13,231 natural speech windows from 50 THCHS-30 speakers, plus 3,317 shifted windows from development speakers. Its category-score projection reaches **86.8% balanced accuracy across 28 categories**, with a known loss under larger timing shifts. This is a display of resemblance to known categories, not a tongue-position diagram or pronunciation grade. [Expanded results, method, and limits](research/MANDARIN_EXPANDED.md). The original nine-sound direct regression remains documented in [the earlier Mandarin report](research/MANDARIN.md).
 
 The demos come from a completed study of **10,676 sound segments from 80 speakers**, comparing acoustic measurements, six frozen audio encoders (including Qwen3-Omni), learned directions, SPARC estimates, and personal reference centroids. Models were selected on validation speakers and tested on 40 separate speakers, with noise and timestamp checks. [Read the measured results](research/RESULTS.md).
 
@@ -25,7 +25,7 @@ The three guided contrasts scored **97.6% S/SH**, **99.1% R/L**, and **92.3% she
 
 Open **http://127.0.0.1:8767**. Stop with Control-C. On the original Mac, the environment has already been installed.
 
-Open **http://127.0.0.1:8767/live.html** for the live Mandarin grid. Chrome is tested with 16 kHz AudioWorklet capture, 160 ms rolling windows, and an 80 ms hop. The first sound can take a moment while an encoder loads. After that, one request runs at a time and stale windows are discarded. Playing a reference stops the microphone. The two axes and reference regions remain fixed.
+Open **http://127.0.0.1:8767/live.html** for the live Mandarin grid. Chrome is tested with 16 kHz AudioWorklet capture, 160 ms rolling windows, and a 40 ms hop for the expanded map (80 ms for the original). The first sound can take a moment while an encoder loads. After that, one request runs at a time and stale windows are discarded. Playing a reference or changing maps stops the microphone. Family filters preserve the map coordinates. Freeze trace holds the last path; starting again clears it.
 
 Setup uses `uv` and an isolated Python 3.12 environment, downloading them when needed. Browser recordings and formats such as WebM/M4A need **ffmpeg** (`brew install ffmpeg` if missing); WAV import works without it. Chrome is the tested browser. No Node build step, API key, or rented GPU is needed for the local experiments.
 
@@ -83,6 +83,9 @@ Personal audio, labels, features, fitted axes, and results stay in ignored `data
 .venv/bin/python scripts/smoke_ui.py
 # Guided UI, with a separate test server (see the script header):
 .venv/bin/python scripts/check_guided.py
+# Live maps, with an isolated server on 127.0.0.1:8766:
+.venv/bin/python scripts/check_live.py
+.venv/bin/python scripts/check_expanded.py
 ```
 
 The original browser smoke test uses generated audio through Chrome's fake microphone. The guided UI test loops a public corpus sound through that microphone. Run them against an isolated `SPEECHLAB_DATA` directory so software-test captures stay out of the personal recording library. They never need a real microphone or cloud key. [Research reproduction](research/README.md) is optional; the demos already include fitted probes.

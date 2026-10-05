@@ -17,15 +17,26 @@
         <p class="eyebrow">MANDARIN / LIVE SOUND MAP</p>
         <h1>See your sound move.</h1>
         <p>
-          Hold a sound. Your dot moves among reference regions from real
-          Mandarin voices.
+          Speak and watch your sound move among real Mandarin voices. Freeze the
+          trail to inspect a brief consonant.
         </p>
       </div>
       <section class="instrument" aria-label="Live Mandarin sound map">
         <div class="map-top">
-          <strong class="map-name"
-            >Vowels + consonants <span>9 sounds · one grid</span></strong
-          >
+          <div class="map-controls">
+            <label
+              >Map
+              <select id="map-select" aria-label="Sound map">
+                <option>Loading…</option>
+              </select></label
+            >
+            <label
+              >Show
+              <select id="family-select" aria-label="Visible sound family">
+                <option value="all">All sounds</option>
+              </select></label
+            >
+          </div>
           <span class="local"><i></i> On your Mac</span>
         </div>
         <div class="transport">
@@ -67,21 +78,19 @@
       <details class="explanation">
         <summary>What does the position mean?</summary>
         <div>
+          <p id="map-method"></p>
           <p>
-            The encoder measures a short window of sound. A fixed projection
-            places it on this grid, using Mandarin recordings to learn which
-            differences matter. The layout is learned from labeled sounds; its
-            left/right and up/down directions have no anatomical meaning. Moving
-            closer to a region means becoming more similar in these two
-            dimensions. The map does not measure tongue position or grade
-            pronunciation.
+            The expanded map covers all 21 Mandarin initial consonants, final
+            ng, and six vowels. Choose a sound family to show fewer reference
+            regions; the coordinates stay fixed. The original nine-sound map is
+            also available. Tone, glides, and the special “i” in
+            <em>shi</em> are outside these categories.
           </p>
           <p>
-            One shared map contains the vowels a / e / i / o / u / ü and the
-            sustained consonants s / sh / x. Tone, stop consonants, and the
-            special “i” in words such as <em>shi</em> are outside this version.
-            Some regions can overlap; two dimensions cannot preserve every sound
-            difference.
+            Stops and affricates are brief: say a syllable and watch the trail,
+            then press Freeze trace. The expanded model was fitted to 160 ms
+            windows that can include adjacent sounds. It does not automatically
+            isolate a consonant from the rest of a syllable.
           </p>
           <p id="evidence"></p>
           <p>
@@ -112,8 +121,7 @@
       </details>
     </main>
     <footer>
-      160 ms listening window · New measurements up to 12 times a second · Local
-      processing
+      160 ms listening window · Continuous local processing · Audio is not saved
     </footer>
   </body>
 </html>
